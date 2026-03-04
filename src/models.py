@@ -8,3 +8,13 @@ class EmployeeData(TypedDict):
 
     name: str
     license: str
+
+
+class SubjectData(TypedDict):
+    """Complete data about a single subject."""
+
+    abbreviation: str
+    title: str
+    total_questions: int
+    percentage: int
+    generated_numbers: list[int]
