@@ -6,7 +6,12 @@ from pathlib import Path
 import openpyxl
 
 from models import EmployeeData
-from config import SUBJECT_NAME_RANGE, TOTAL_QUESTIONS_RANGE, PERCENTAGE_RANGE
+from config import (
+    SUBJECT_NAME_RANGE,
+    TOTAL_QUESTIONS_RANGE,
+    PERCENTAGE_RANGE,
+    GENERATED_NUMBERS_RANGE,
+)
 
 
 def _load_cell_value(file: Path, cell: str) -> str:
@@ -112,3 +117,24 @@ def load_percentages(file: Path) -> list[int]:
     """Load percentage values for each subject."""
     start, end = PERCENTAGE_RANGE.split(":")
     return _load_numeric_values(file, start, end)
+
+
+def load_generated_numbers(file: Path) -> list[list[int]]:
+    """Load generated question numbers for each subject."""
+    workbook = openpyxl.load_workbook(file, data_only=True)
+    sheet = workbook.active
+    pattern = re.compile(r"(\d{1,3},\s*)+")
+
+    if sheet is None:
+        return []
+
+    generated_numbers = []
+
+    for row in sheet[GENERATED_NUMBERS_RANGE]:
+        cell_value = str(row[0].value or "")
+
+        if pattern.search(cell_value):
+            numbers = [int(n) for n in cell_value.split(", ")]
+            generated_numbers.append(numbers)
+
+    return generated_numbers
