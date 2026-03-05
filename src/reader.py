@@ -33,3 +33,9 @@ def _parse_subject_abbreviation(text: str) -> str | None:
         return match.group(1).lower()
 
     return None
+
+
+def _parse_subject_title(text: str) -> str:
+    """Extract title only from subject title, removing abbreviation."""
+    pattern = re.compile(r"\s*\([A-Za-z]{3,}\)$")
+    return pattern.sub("", text).replace("\n", " ").strip().lower()
