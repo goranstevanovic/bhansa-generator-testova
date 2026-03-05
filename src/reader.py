@@ -80,3 +80,23 @@ def load_subject_titles(file: Path) -> list[dict]:
             subjects.append({"abbreviation": abbrev, "title": title})
 
     return subjects
+
+
+def _load_numeric_values(file: Path, range_start: str, range_end: str) -> list[int]:
+    """Load numeric values from a column range."""
+    workbook = openpyxl.load_workbook(file, data_only=True)
+    sheet = workbook.active
+    column_range = f"{range_start}:{range_end}"
+
+    if sheet is None:
+        return []
+
+    values = []
+
+    for row in sheet[column_range]:
+        cell_value = str(row[0].value or "")
+
+        if cell_value.isdigit():
+            values.append(int(cell_value))
+
+    return values
