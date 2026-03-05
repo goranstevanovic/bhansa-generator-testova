@@ -5,7 +5,7 @@ from pathlib import Path
 
 import openpyxl
 
-from models import EmployeeData
+from models import EmployeeData, SubjectData
 from config import (
     SUBJECT_NAME_RANGE,
     TOTAL_QUESTIONS_RANGE,
@@ -138,3 +138,25 @@ def load_generated_numbers(file: Path) -> list[list[int]]:
             generated_numbers.append(numbers)
 
     return generated_numbers
+
+
+def load_all_subject_data(file: Path) -> list[SubjectData]:
+    """Load complete data for each subject."""
+    subject_titles = load_subject_titles(file)
+    total_questions = load_total_questions(file)
+    percentages = load_percentages(file)
+    generated_numbers = load_generated_numbers(file)
+
+    subjects: list[SubjectData] = []
+
+    for i, subject_title in enumerate(subject_titles):
+        subject: SubjectData = {
+            "abbreviation": subject_title["abbreviation"],
+            "title": subject_title["title"],
+            "total_questions": total_questions[i],
+            "percentage": percentages[i],
+            "generated_numbers": generated_numbers[i],
+        }
+        subjects.append(subject)
+
+    return subjects
