@@ -5,6 +5,8 @@ from pathlib import Path
 
 import openpyxl
 
+from models import EmployeeData
+
 
 def _load_cell_value(file: Path, cell: str) -> str:
     """Load a single cell value from Excel file."""
@@ -39,3 +41,20 @@ def _parse_subject_title(text: str) -> str:
     """Extract title only from subject title, removing abbreviation."""
     pattern = re.compile(r"\s*\([A-Za-z]{3,}\)$")
     return pattern.sub("", text).replace("\n", " ").strip().lower()
+
+
+def load_employee_data(file: Path, cell: str) -> EmployeeData:
+    """Load employee (candidate or assessor) data."""
+    value = _load_cell_value(file, cell).lower()
+    parts = value.split()
+
+    if len(parts) < 2:
+        return {
+            "name": "",
+            "license": "",
+        }
+
+    return {
+        "name": " ".join(parts[:-1]).title(),
+        "license": parts[-1].upper(),
+    }
