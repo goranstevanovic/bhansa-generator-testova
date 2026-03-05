@@ -6,6 +6,7 @@ from pathlib import Path
 import openpyxl
 
 from models import EmployeeData
+from config import SUBJECT_NAME_RANGE
 
 
 def _load_cell_value(file: Path, cell: str) -> str:
@@ -58,3 +59,24 @@ def load_employee_data(file: Path, cell: str) -> EmployeeData:
         "name": " ".join(parts[:-1]).title(),
         "license": parts[-1].upper(),
     }
+
+
+def load_subject_titles(file: Path) -> list[dict]:
+    """Load subject titles and abbreviations."""
+    workbook = openpyxl.load_workbook(file, data_only=True)
+    sheet = workbook.active
+
+    if sheet is None:
+        return []
+
+    subjects = []
+
+    for row in sheet[SUBJECT_NAME_RANGE]:
+        cell_value = str(row[0].value or "")
+        abbrev = _parse_subject_abbreviation(cell_value)
+        title = _parse_subject_title(cell_value)
+
+        if abbrev:
+            subjects.append({"abbreviation": abbrev, "title": title})
+
+    return subjects
