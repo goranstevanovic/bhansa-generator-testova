@@ -1,5 +1,6 @@
 """Excel file reading functionality."""
 
+import re
 from pathlib import Path
 
 import openpyxl
@@ -21,3 +22,14 @@ def _load_cell_value(file: Path, cell: str) -> str:
     value = cell_obj.value
 
     return str(value) if value is not None else ""
+
+
+def _parse_subject_abbreviation(text: str) -> str | None:
+    """Extract abbreviation from subject title."""
+    pattern = re.compile(r"\(([A-Za-z]{3,})\)$")
+    match = pattern.search(text)
+
+    if match:
+        return match.group(1).lower()
+
+    return None
