@@ -6,7 +6,7 @@ from pathlib import Path
 import openpyxl
 
 from models import EmployeeData
-from config import SUBJECT_NAME_RANGE, TOTAL_QUESTIONS_RANGE
+from config import SUBJECT_NAME_RANGE, TOTAL_QUESTIONS_RANGE, PERCENTAGE_RANGE
 
 
 def _load_cell_value(file: Path, cell: str) -> str:
@@ -105,4 +105,10 @@ def _load_numeric_values(file: Path, range_start: str, range_end: str) -> list[i
 def load_total_questions(file: Path) -> list[int]:
     """Load total number of questions for each subject."""
     start, end = TOTAL_QUESTIONS_RANGE.split(":")
+    return _load_numeric_values(file, start, end)
+
+
+def load_percentages(file: Path) -> list[int]:
+    """Load percentage values for each subject."""
+    start, end = PERCENTAGE_RANGE.split(":")
     return _load_numeric_values(file, start, end)
