@@ -4,11 +4,12 @@ from pathlib import Path
 
 import pytest
 
-from reader import _load_cell_value, _parse_subject_abbreviation
+from reader import _load_cell_value, _parse_subject_abbreviation, _parse_subject_title
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
 
 
+# Tests for _load_cell_value()
 class TestLoadCellValue:
     def test_loads_cell_value(self):
         result = _load_cell_value(SAMPLE_FORM, "B4")
@@ -16,6 +17,7 @@ class TestLoadCellValue:
         assert result == expected_result
 
 
+# Tests for _parse_subject_abbreviation()
 class TestParseSubjectAbbreviations:
     def test_with_valid_abbreviation(self):
         assert _parse_subject_abbreviation("NAZIV PRVE OBLASTI (NPO)") == "npo"
