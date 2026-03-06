@@ -27,3 +27,18 @@ class TestParseSubjectAbbreviations:
     def test_without_abbreviation(self):
         assert _parse_subject_abbreviation("NAZIV OBLASTI") is None
         assert _parse_subject_abbreviation("") is None
+
+
+# Tests for _parse_subject_title()
+class TestParseSubjectTitle:
+    def test_with_abbreviation(self):
+        assert _parse_subject_title("NAZIV PRVE OBLASTI (NPO)") == "naziv prve oblasti"
+        assert (
+            _parse_subject_title("NAZIV DRUGE OBLASTI (NDO)") == "naziv druge oblasti"
+        )
+        assert (
+            _parse_subject_title("NAZIV TREĆE OBLASTI (NTO)") == "naziv treće oblasti"
+        )
+
+    def test_newline_replacement(self):
+        assert _parse_subject_title("NAZIV\nOBLASTI\n(NOB)") == "naziv oblasti"
