@@ -141,7 +141,9 @@ class TestLoadTotalQuestions:
 class TestLoadPercentages:
     def test_returns_list_of_percentages(self):
         result = load_percentages(SAMPLE_FORM)
-        assert result == [50, 55, 60]
+        expected_result = [50, 55, 60]
+
+        assert result == expected_result
 
 
 # Tests for load_generated_numbers()
