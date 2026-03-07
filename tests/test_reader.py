@@ -1,7 +1,6 @@
 """Tests for reader module."""
 
 from pathlib import Path
-from unittest.mock import patch
 
 import pytest
 
@@ -105,7 +104,6 @@ class TestLoadNumericValues:
 
 # Tests for load_total_questions()
 class TestLoadTotalQuestions:
-    @patch("src.reader.TOTAL_QUESTIONS_RANGE", "D10:D29")
     def test_returns_list_of_total_questions(self):
         result = load_total_questions(SAMPLE_FORM)
         assert result == [10, 9, 8]
