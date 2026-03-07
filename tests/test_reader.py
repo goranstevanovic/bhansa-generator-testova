@@ -4,7 +4,12 @@ from pathlib import Path
 
 import pytest
 
-from reader import _load_cell_value, _parse_subject_abbreviation, _parse_subject_title
+from reader import (
+    _load_cell_value,
+    _parse_subject_abbreviation,
+    _parse_subject_title,
+    load_employee_data,
+)
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
 
@@ -42,3 +47,21 @@ class TestParseSubjectTitle:
 
     def test_newline_replacement(self):
         assert _parse_subject_title("NAZIV\nOBLASTI\n(NOB)") == "naziv oblasti"
+
+
+# Tests for load_employee_data()
+class TestLoadEmployeeData:
+    def test_load_candidate_data(self):
+        result = load_employee_data(SAMPLE_FORM, "B4")
+        expected_result = {"name": "Marko Marković", "license": "ATCO.0123"}
+        assert result == expected_result
+
+    def test_load_assessor_data(self):
+        result = load_employee_data(SAMPLE_FORM, "B5")
+        expected_result = {"name": "Petar Petrović-Petrić", "license": "ATCO.4567"}
+        assert result == expected_result
+
+    def test_load_employee_data_from_empty_cell(self):
+        result = load_employee_data(SAMPLE_FORM, "A1")
+        expected_result = {"name": "", "license": ""}
+        assert result == expected_result
