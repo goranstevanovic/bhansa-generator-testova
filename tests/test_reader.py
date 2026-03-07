@@ -1,6 +1,7 @@
 """Tests for reader module."""
 
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
@@ -11,6 +12,7 @@ from reader import (
     load_employee_data,
     load_subject_titles,
     _load_numeric_values,
+    load_total_questions,
 )
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
@@ -99,3 +101,11 @@ class TestLoadNumericValues:
         result = _load_numeric_values(SAMPLE_FORM, start, end)
         assert isinstance(result, list)
         assert all(isinstance(x, int) for x in result)
+
+
+# Tests for load_total_questions()
+class TestLoadTotalQuestions:
+    @patch("src.reader.TOTAL_QUESTIONS_RANGE", "D10:D29")
+    def test_returns_list_of_total_questions(self):
+        result = load_total_questions(SAMPLE_FORM)
+        assert result == [10, 9, 8]
