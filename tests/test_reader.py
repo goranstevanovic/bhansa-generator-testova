@@ -12,6 +12,7 @@ from reader import (
     load_subject_titles,
     _load_numeric_values,
     load_total_questions,
+    load_percentages,
 )
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
@@ -107,3 +108,10 @@ class TestLoadTotalQuestions:
     def test_returns_list_of_total_questions(self):
         result = load_total_questions(SAMPLE_FORM)
         assert result == [10, 9, 8]
+
+
+# Tests for load_percentages()
+class TestLoadPercentages:
+    def test_returns_list_of_percentages(self):
+        result = load_percentages(SAMPLE_FORM)
+        assert result == [50, 55, 60]
