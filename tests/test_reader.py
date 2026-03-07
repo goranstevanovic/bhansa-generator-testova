@@ -9,6 +9,7 @@ from reader import (
     _parse_subject_abbreviation,
     _parse_subject_title,
     load_employee_data,
+    load_subject_titles,
 )
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
@@ -65,3 +66,25 @@ class TestLoadEmployeeData:
         result = load_employee_data(SAMPLE_FORM, "A1")
         expected_result = {"name": "", "license": ""}
         assert result == expected_result
+
+
+# Tests for load_subject_titles()
+class TestLoadSubjectTitles:
+    def test_returns_list(self):
+        result = load_subject_titles(SAMPLE_FORM)
+        assert isinstance(result, list)
+
+    def test_list_contains_dicts(self):
+        result = load_subject_titles(SAMPLE_FORM)
+        assert "abbreviation" in result[0]
+        assert "title" in result[0]
+
+    def test_loads_correct_abbreviations_and_titles(self):
+        result = load_subject_titles(SAMPLE_FORM)
+        subject1, subject2, subject3 = result
+        assert subject1["abbreviation"] == "npo"
+        assert subject1["title"] == "naziv prve oblasti"
+        assert subject2["abbreviation"] == "ndo"
+        assert subject2["title"] == "naziv druge oblasti"
+        assert subject3["abbreviation"] == "nto"
+        assert subject3["title"] == "naziv treće oblasti"
