@@ -100,14 +100,22 @@ class TestLoadSubjectTitles:
         assert "title" in result[0]
 
     def test_loads_correct_abbreviations_and_titles(self):
-        result = load_subject_titles(SAMPLE_FORM)
-        subject1, subject2, subject3 = result
-        assert subject1["abbreviation"] == "npo"
-        assert subject1["title"] == "naziv prve oblasti"
-        assert subject2["abbreviation"] == "ndo"
-        assert subject2["title"] == "naziv druge oblasti"
-        assert subject3["abbreviation"] == "nto"
-        assert subject3["title"] == "naziv treće oblasti"
+        subjects = load_subject_titles(SAMPLE_FORM)
+        subject1, subject2, subject3 = subjects
+
+        expected_subject1_abbreviation = "npo"
+        expected_subject1_title = "naziv prve oblasti"
+        expected_subject2_abbreviation = "ndo"
+        expected_subject2_title = "naziv druge oblasti"
+        expected_subject3_abbreviation = "nto"
+        expected_subject3_title = "naziv treće oblasti"
+
+        assert subject1["abbreviation"] == expected_subject1_abbreviation
+        assert subject1["title"] == expected_subject1_title
+        assert subject2["abbreviation"] == expected_subject2_abbreviation
+        assert subject2["title"] == expected_subject2_title
+        assert subject3["abbreviation"] == expected_subject3_abbreviation
+        assert subject3["title"] == expected_subject3_title
 
 
 # Tests for _load_numeric_values()
