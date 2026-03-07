@@ -155,10 +155,15 @@ class TestLoadGeneratedNumbers:
         assert all(isinstance(x, int) for nums in result for x in nums)
 
     def test_returns_list_of_generated_numbers(self):
-        result = load_generated_numbers(SAMPLE_FORM)
-        assert result[0] == [1, 2, 6, 8, 10]
-        assert result[1] == [1, 2, 3, 6, 7]
-        assert result[2] == [1, 4, 5, 6, 7]
+        results = load_generated_numbers(SAMPLE_FORM)
+        result1, result2, result3 = results
+        expected_result1 = [1, 2, 6, 8, 10]
+        expected_result2 = [1, 2, 3, 6, 7]
+        expected_result3 = [1, 4, 5, 6, 7]
+
+        assert result1 == expected_result1
+        assert result2 == expected_result2
+        assert result3 == expected_result3
 
 
 # Tests for load_all_subject_data()
