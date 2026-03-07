@@ -13,6 +13,7 @@ from reader import (
     _load_numeric_values,
     load_total_questions,
     load_percentages,
+    load_generated_numbers,
 )
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
@@ -115,3 +116,18 @@ class TestLoadPercentages:
     def test_returns_list_of_percentages(self):
         result = load_percentages(SAMPLE_FORM)
         assert result == [50, 55, 60]
+
+
+# Tests for load_generated_numbers()
+class TestLoadGeneratedNumbers:
+    def test_returns_nested_list_of_integers(self):
+        result = load_generated_numbers(SAMPLE_FORM)
+        assert isinstance(result, list)
+        assert all(isinstance(x, list) for x in result)
+        assert all(isinstance(x, int) for nums in result for x in nums)
+
+    def test_returns_list_of_generated_numbers(self):
+        result = load_generated_numbers(SAMPLE_FORM)
+        assert result[0] == [1, 2, 6, 8, 10]
+        assert result[1] == [1, 2, 3, 6, 7]
+        assert result[2] == [1, 4, 5, 6, 7]
