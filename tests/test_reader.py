@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from reader import (
     _load_cell_value,
     _parse_subject_abbreviation,
