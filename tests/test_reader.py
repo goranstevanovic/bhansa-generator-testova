@@ -29,9 +29,18 @@ class TestLoadCellValue:
 # Tests for _parse_subject_abbreviation()
 class TestParseSubjectAbbreviations:
     def test_with_valid_abbreviation(self):
-        assert _parse_subject_abbreviation("NAZIV PRVE OBLASTI (NPO)") == "npo"
-        assert _parse_subject_abbreviation("NAZIV DRUGE OBLASTI (NDO)") == "ndo"
-        assert _parse_subject_abbreviation("NAZIV TREĆE OBLASTI (NTO)") == "nto"
+        result1 = _parse_subject_abbreviation("naziv prve oblasti (npo)")
+        expected_result1 = "npo"
+
+        result2 = _parse_subject_abbreviation("NAZIV DRUGE OBLASTI (NDO)")
+        expected_result2 = "ndo"
+
+        result3 = _parse_subject_abbreviation("Naziv TrEćE OBlaSti (nTo)")
+        expected_result3 = "nto"
+
+        assert result1 == expected_result1
+        assert result2 == expected_result2
+        assert result3 == expected_result3
 
     def test_without_abbreviation(self):
         assert _parse_subject_abbreviation("NAZIV OBLASTI") is None
