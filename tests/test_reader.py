@@ -14,6 +14,7 @@ from reader import (
     load_total_questions,
     load_percentages,
     load_generated_numbers,
+    load_all_subject_data,
 )
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
@@ -131,3 +132,44 @@ class TestLoadGeneratedNumbers:
         assert result[0] == [1, 2, 6, 8, 10]
         assert result[1] == [1, 2, 3, 6, 7]
         assert result[2] == [1, 4, 5, 6, 7]
+
+
+# Tests for load_all_subject_data()
+class TestLoadAllSubjectData:
+    def test_returns_list_of_subject_data(self):
+        result = load_all_subject_data(SAMPLE_FORM)
+        subject = result[0]
+        assert isinstance(result, list)
+        assert "abbreviation" in subject
+        assert "title" in subject
+        assert "total_questions" in subject
+        assert "percentage" in subject
+        assert "generated_numbers" in subject
+
+    def test_returns_correct_number_of_subject_data(self):
+        result = load_all_subject_data(SAMPLE_FORM)
+        assert len(result) == 3
+
+    def test_returns_subject_data(self):
+        result = load_all_subject_data(SAMPLE_FORM)
+        subject1 = result[0]
+        subject2 = result[1]
+        subject3 = result[2]
+
+        assert subject1["abbreviation"] == "npo"
+        assert subject1["title"] == "naziv prve oblasti"
+        assert subject1["total_questions"] == 10
+        assert subject1["percentage"] == 50
+        assert subject1["generated_numbers"] == [1, 2, 6, 8, 10]
+
+        assert subject2["abbreviation"] == "ndo"
+        assert subject2["title"] == "naziv druge oblasti"
+        assert subject2["total_questions"] == 9
+        assert subject2["percentage"] == 55
+        assert subject2["generated_numbers"] == [1, 2, 3, 6, 7]
+
+        assert subject3["abbreviation"] == "nto"
+        assert subject3["title"] == "naziv treće oblasti"
+        assert subject3["total_questions"] == 8
+        assert subject3["percentage"] == 60
+        assert subject3["generated_numbers"] == [1, 4, 5, 6, 7]
