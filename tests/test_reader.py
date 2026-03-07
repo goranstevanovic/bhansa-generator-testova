@@ -10,6 +10,7 @@ from reader import (
     _parse_subject_title,
     load_employee_data,
     load_subject_titles,
+    _load_numeric_values,
 )
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
@@ -88,3 +89,13 @@ class TestLoadSubjectTitles:
         assert subject2["title"] == "naziv druge oblasti"
         assert subject3["abbreviation"] == "nto"
         assert subject3["title"] == "naziv treće oblasti"
+
+
+# Tests for _load_numeric_values()
+class TestLoadNumericValues:
+    def test_returns_list_of_ints(self):
+        TOTAL_QUESTIONS_RANGE = "D10:D29"
+        start, end = TOTAL_QUESTIONS_RANGE.split(":")
+        result = _load_numeric_values(SAMPLE_FORM, start, end)
+        assert isinstance(result, list)
+        assert all(isinstance(x, int) for x in result)
