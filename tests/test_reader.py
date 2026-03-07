@@ -23,6 +23,7 @@ class TestLoadCellValue:
     def test_loads_cell_value(self):
         result = _load_cell_value(SAMPLE_FORM, "B4")
         expected_result = "Marko Marković ATCO.0123"
+
         assert result == expected_result
 
 
@@ -75,16 +76,19 @@ class TestLoadEmployeeData:
     def test_load_candidate_data(self):
         result = load_employee_data(SAMPLE_FORM, "B4")
         expected_result = {"name": "Marko Marković", "license": "ATCO.0123"}
+
         assert result == expected_result
 
     def test_load_assessor_data(self):
         result = load_employee_data(SAMPLE_FORM, "B5")
         expected_result = {"name": "Petar Petrović-Petrić", "license": "ATCO.4567"}
+
         assert result == expected_result
 
     def test_load_employee_data_from_empty_cell(self):
         result = load_employee_data(SAMPLE_FORM, "A1")
         expected_result = {"name": "", "license": ""}
+
         assert result == expected_result
 
 
@@ -92,10 +96,12 @@ class TestLoadEmployeeData:
 class TestLoadSubjectTitles:
     def test_returns_list(self):
         result = load_subject_titles(SAMPLE_FORM)
+
         assert isinstance(result, list)
 
     def test_list_contains_dicts(self):
         result = load_subject_titles(SAMPLE_FORM)
+
         assert "abbreviation" in result[0]
         assert "title" in result[0]
 
@@ -124,6 +130,7 @@ class TestLoadNumericValues:
         TOTAL_QUESTIONS_RANGE = "D10:D29"
         start, end = TOTAL_QUESTIONS_RANGE.split(":")
         result = _load_numeric_values(SAMPLE_FORM, start, end)
+
         assert isinstance(result, list)
         assert all(isinstance(x, int) for x in result)
 
@@ -150,6 +157,7 @@ class TestLoadPercentages:
 class TestLoadGeneratedNumbers:
     def test_returns_nested_list_of_integers(self):
         result = load_generated_numbers(SAMPLE_FORM)
+
         assert isinstance(result, list)
         assert all(isinstance(x, list) for x in result)
         assert all(isinstance(x, int) for nums in result for x in nums)
@@ -157,6 +165,7 @@ class TestLoadGeneratedNumbers:
     def test_returns_list_of_generated_numbers(self):
         results = load_generated_numbers(SAMPLE_FORM)
         result1, result2, result3 = results
+
         expected_result1 = [1, 2, 6, 8, 10]
         expected_result2 = [1, 2, 3, 6, 7]
         expected_result3 = [1, 4, 5, 6, 7]
@@ -171,6 +180,7 @@ class TestLoadAllSubjectData:
     def test_returns_list_of_subject_data(self):
         result = load_all_subject_data(SAMPLE_FORM)
         subject = result[0]
+
         assert isinstance(result, list)
         assert "abbreviation" in subject
         assert "title" in subject
@@ -180,6 +190,7 @@ class TestLoadAllSubjectData:
 
     def test_returns_correct_number_of_subject_data(self):
         result = load_all_subject_data(SAMPLE_FORM)
+
         assert len(result) == 3
 
     def test_returns_subject_data(self):
