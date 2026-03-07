@@ -50,16 +50,24 @@ class TestParseSubjectAbbreviations:
 # Tests for _parse_subject_title()
 class TestParseSubjectTitle:
     def test_with_abbreviation(self):
-        assert _parse_subject_title("NAZIV PRVE OBLASTI (NPO)") == "naziv prve oblasti"
-        assert (
-            _parse_subject_title("NAZIV DRUGE OBLASTI (NDO)") == "naziv druge oblasti"
-        )
-        assert (
-            _parse_subject_title("NAZIV TREĆE OBLASTI (NTO)") == "naziv treće oblasti"
-        )
+        result1 = _parse_subject_title("naziv prve oblasti (npo)")
+        expected_result1 = "naziv prve oblasti"
+
+        result2 = _parse_subject_title("NAZIV DRUGE OBLASTI (NDO)")
+        expected_result2 = "naziv druge oblasti"
+
+        result3 = _parse_subject_title("Naziv TrEćE OBlaSti (nTo)")
+        expected_result3 = "naziv treće oblasti"
+
+        assert result1 == expected_result1
+        assert result2 == expected_result2
+        assert result3 == expected_result3
 
     def test_newline_replacement(self):
-        assert _parse_subject_title("NAZIV\nOBLASTI\n(NOB)") == "naziv oblasti"
+        result = _parse_subject_title("NAZIV\nOBLASTI\n(NOB)")
+        expected_result = "naziv oblasti"
+
+        assert result == expected_result
 
 
 # Tests for load_employee_data()
