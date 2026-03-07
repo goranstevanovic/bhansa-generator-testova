@@ -132,7 +132,9 @@ class TestLoadNumericValues:
 class TestLoadTotalQuestions:
     def test_returns_list_of_total_questions(self):
         result = load_total_questions(SAMPLE_FORM)
-        assert result == [10, 9, 8]
+        expected_result = [10, 9, 8]
+
+        assert result == expected_result
 
 
 # Tests for load_percentages()
