@@ -113,9 +113,9 @@ def load_total_questions(file: Path, cell_range: str) -> list[int]:
     return _load_numeric_values(file, start, end)
 
 
-def load_percentages(file: Path) -> list[int]:
+def load_percentages(file: Path, cell_range: str) -> list[int]:
     """Load percentage values for each subject."""
-    start, end = PERCENTAGE_RANGE.split(":")
+    start, end = cell_range.split(":")
     return _load_numeric_values(file, start, end)
 
 
@@ -144,7 +144,7 @@ def load_all_subject_data(file: Path) -> list[SubjectData]:
     """Load complete data for each subject."""
     subject_titles = load_subject_titles(file, SUBJECT_NAME_RANGE)
     total_questions = load_total_questions(file, TOTAL_QUESTIONS_RANGE)
-    percentages = load_percentages(file)
+    percentages = load_percentages(file, PERCENTAGE_RANGE)
     generated_numbers = load_generated_numbers(file)
 
     subjects: list[SubjectData] = []

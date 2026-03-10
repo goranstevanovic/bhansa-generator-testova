@@ -18,6 +18,7 @@ from reader import (
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
 SAMPLE_SUBJECT_NAME_RANGE = "A10:A29"
 SAMPLE_TOTAL_QUESTIONS_RANGE = "D10:D29"
+SAMPLE_PERCENTAGE_RANGE = "E10:E29"
 
 
 # Tests for _load_cell_value()
@@ -151,7 +152,7 @@ class TestLoadTotalQuestions:
 # Tests for load_percentages()
 class TestLoadPercentages:
     def test_returns_list_of_percentages(self):
-        result = load_percentages(SAMPLE_FORM)
+        result = load_percentages(SAMPLE_FORM, SAMPLE_PERCENTAGE_RANGE)
         expected_result = [50, 55, 60]
 
         assert result == expected_result
