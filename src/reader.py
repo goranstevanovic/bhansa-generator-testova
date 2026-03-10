@@ -6,12 +6,6 @@ from pathlib import Path
 import openpyxl
 
 from models import EmployeeData, SubjectData
-from config import (
-    SUBJECT_NAME_RANGE,
-    TOTAL_QUESTIONS_RANGE,
-    PERCENTAGE_RANGE,
-    GENERATED_NUMBERS_RANGE,
-)
 
 
 def _load_cell_value(file: Path, cell: str) -> str:
@@ -66,7 +60,7 @@ def load_employee_data(file: Path, cell: str) -> EmployeeData:
     }
 
 
-def load_subject_titles(file: Path) -> list[dict]:
+def load_subject_titles(file: Path, cell_range: str) -> list[dict]:
     """Load subject titles and abbreviations."""
     workbook = openpyxl.load_workbook(file, data_only=True)
     sheet = workbook.active
@@ -76,7 +70,7 @@ def load_subject_titles(file: Path) -> list[dict]:
 
     subjects = []
 
-    for row in sheet[SUBJECT_NAME_RANGE]:
+    for row in sheet[cell_range]:
         cell_value = str(row[0].value or "")
         abbrev = _parse_subject_abbreviation(cell_value)
         title = _parse_subject_title(cell_value)
@@ -107,19 +101,19 @@ def _load_numeric_values(file: Path, range_start: str, range_end: str) -> list[i
     return values
 
 
-def load_total_questions(file: Path) -> list[int]:
+def load_total_questions(file: Path, cell_range: str) -> list[int]:
     """Load total number of questions for each subject."""
-    start, end = TOTAL_QUESTIONS_RANGE.split(":")
+    start, end = cell_range.split(":")
     return _load_numeric_values(file, start, end)
 
 
-def load_percentages(file: Path) -> list[int]:
+def load_percentages(file: Path, cell_range: str) -> list[int]:
     """Load percentage values for each subject."""
-    start, end = PERCENTAGE_RANGE.split(":")
+    start, end = cell_range.split(":")
     return _load_numeric_values(file, start, end)
 
 
-def load_generated_numbers(file: Path) -> list[list[int]]:
+def load_generated_numbers(file: Path, cell_range: str) -> list[list[int]]:
     """Load generated question numbers for each subject."""
     workbook = openpyxl.load_workbook(file, data_only=True)
     sheet = workbook.active
@@ -130,7 +124,7 @@ def load_generated_numbers(file: Path) -> list[list[int]]:
 
     generated_numbers = []
 
-    for row in sheet[GENERATED_NUMBERS_RANGE]:
+    for row in sheet[cell_range]:
         cell_value = str(row[0].value or "")
 
         if pattern.search(cell_value):
@@ -140,12 +134,18 @@ def load_generated_numbers(file: Path) -> list[list[int]]:
     return generated_numbers
 
 
-def load_all_subject_data(file: Path) -> list[SubjectData]:
+def load_all_subject_data(
+    file: Path,
+    subject_titles_cell_range: str,
+    total_questions_cell_range: str,
+    percentages_cell_range: str,
+    generated_numbers_cell_range: str,
+) -> list[SubjectData]:
     """Load complete data for each subject."""
-    subject_titles = load_subject_titles(file)
-    total_questions = load_total_questions(file)
-    percentages = load_percentages(file)
-    generated_numbers = load_generated_numbers(file)
+    subject_titles = load_subject_titles(file, subject_titles_cell_range)
+    total_questions = load_total_questions(file, total_questions_cell_range)
+    percentages = load_percentages(file, percentages_cell_range)
+    generated_numbers = load_generated_numbers(file, generated_numbers_cell_range)
 
     subjects: list[SubjectData] = []
 

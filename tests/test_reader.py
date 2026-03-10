@@ -16,6 +16,10 @@ from reader import (
 )
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
+SAMPLE_SUBJECT_NAME_RANGE = "A10:A29"
+SAMPLE_TOTAL_QUESTIONS_RANGE = "D10:D29"
+SAMPLE_PERCENTAGE_RANGE = "E10:E29"
+SAMPLE_GENERATED_NUMBERS_RANGE = "F10:F29"
 
 
 # Tests for _load_cell_value()
@@ -95,18 +99,20 @@ class TestLoadEmployeeData:
 # Tests for load_subject_titles()
 class TestLoadSubjectTitles:
     def test_returns_list(self):
-        result = load_subject_titles(SAMPLE_FORM)
+        result = load_subject_titles(SAMPLE_FORM, SAMPLE_SUBJECT_NAME_RANGE)
 
         assert isinstance(result, list)
 
     def test_list_contains_dicts(self):
-        result = load_subject_titles(SAMPLE_FORM)
+        result = load_subject_titles(SAMPLE_FORM, SAMPLE_SUBJECT_NAME_RANGE)
+
+        print(result)
 
         assert "abbreviation" in result[0]
         assert "title" in result[0]
 
     def test_loads_correct_abbreviations_and_titles(self):
-        subjects = load_subject_titles(SAMPLE_FORM)
+        subjects = load_subject_titles(SAMPLE_FORM, SAMPLE_SUBJECT_NAME_RANGE)
         subject1, subject2, subject3 = subjects
 
         expected_subject1_abbreviation = "npo"
@@ -138,7 +144,7 @@ class TestLoadNumericValues:
 # Tests for load_total_questions()
 class TestLoadTotalQuestions:
     def test_returns_list_of_total_questions(self):
-        result = load_total_questions(SAMPLE_FORM)
+        result = load_total_questions(SAMPLE_FORM, SAMPLE_TOTAL_QUESTIONS_RANGE)
         expected_result = [10, 9, 8]
 
         assert result == expected_result
@@ -147,7 +153,7 @@ class TestLoadTotalQuestions:
 # Tests for load_percentages()
 class TestLoadPercentages:
     def test_returns_list_of_percentages(self):
-        result = load_percentages(SAMPLE_FORM)
+        result = load_percentages(SAMPLE_FORM, SAMPLE_PERCENTAGE_RANGE)
         expected_result = [50, 55, 60]
 
         assert result == expected_result
@@ -156,14 +162,14 @@ class TestLoadPercentages:
 # Tests for load_generated_numbers()
 class TestLoadGeneratedNumbers:
     def test_returns_nested_list_of_integers(self):
-        result = load_generated_numbers(SAMPLE_FORM)
+        result = load_generated_numbers(SAMPLE_FORM, SAMPLE_GENERATED_NUMBERS_RANGE)
 
         assert isinstance(result, list)
         assert all(isinstance(x, list) for x in result)
         assert all(isinstance(x, int) for nums in result for x in nums)
 
     def test_returns_list_of_generated_numbers(self):
-        results = load_generated_numbers(SAMPLE_FORM)
+        results = load_generated_numbers(SAMPLE_FORM, SAMPLE_GENERATED_NUMBERS_RANGE)
         result1, result2, result3 = results
 
         expected_result1 = [1, 2, 6, 8, 10]
@@ -178,7 +184,13 @@ class TestLoadGeneratedNumbers:
 # Tests for load_all_subject_data()
 class TestLoadAllSubjectData:
     def test_returns_list_of_subject_data(self):
-        result = load_all_subject_data(SAMPLE_FORM)
+        result = load_all_subject_data(
+            SAMPLE_FORM,
+            SAMPLE_SUBJECT_NAME_RANGE,
+            SAMPLE_TOTAL_QUESTIONS_RANGE,
+            SAMPLE_PERCENTAGE_RANGE,
+            SAMPLE_GENERATED_NUMBERS_RANGE,
+        )
         subject = result[0]
 
         assert isinstance(result, list)
@@ -189,12 +201,24 @@ class TestLoadAllSubjectData:
         assert "generated_numbers" in subject
 
     def test_returns_correct_number_of_subject_data(self):
-        result = load_all_subject_data(SAMPLE_FORM)
+        result = result = load_all_subject_data(
+            SAMPLE_FORM,
+            SAMPLE_SUBJECT_NAME_RANGE,
+            SAMPLE_TOTAL_QUESTIONS_RANGE,
+            SAMPLE_PERCENTAGE_RANGE,
+            SAMPLE_GENERATED_NUMBERS_RANGE,
+        )
 
         assert len(result) == 3
 
     def test_returns_subject_data(self):
-        result = load_all_subject_data(SAMPLE_FORM)
+        result = result = load_all_subject_data(
+            SAMPLE_FORM,
+            SAMPLE_SUBJECT_NAME_RANGE,
+            SAMPLE_TOTAL_QUESTIONS_RANGE,
+            SAMPLE_PERCENTAGE_RANGE,
+            SAMPLE_GENERATED_NUMBERS_RANGE,
+        )
         subject1 = result[0]
         subject2 = result[1]
         subject3 = result[2]
