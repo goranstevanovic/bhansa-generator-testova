@@ -184,7 +184,13 @@ class TestLoadGeneratedNumbers:
 # Tests for load_all_subject_data()
 class TestLoadAllSubjectData:
     def test_returns_list_of_subject_data(self):
-        result = load_all_subject_data(SAMPLE_FORM)
+        result = load_all_subject_data(
+            SAMPLE_FORM,
+            SAMPLE_SUBJECT_NAME_RANGE,
+            SAMPLE_TOTAL_QUESTIONS_RANGE,
+            SAMPLE_PERCENTAGE_RANGE,
+            SAMPLE_GENERATED_NUMBERS_RANGE,
+        )
         subject = result[0]
 
         assert isinstance(result, list)
@@ -195,12 +201,24 @@ class TestLoadAllSubjectData:
         assert "generated_numbers" in subject
 
     def test_returns_correct_number_of_subject_data(self):
-        result = load_all_subject_data(SAMPLE_FORM)
+        result = result = load_all_subject_data(
+            SAMPLE_FORM,
+            SAMPLE_SUBJECT_NAME_RANGE,
+            SAMPLE_TOTAL_QUESTIONS_RANGE,
+            SAMPLE_PERCENTAGE_RANGE,
+            SAMPLE_GENERATED_NUMBERS_RANGE,
+        )
 
         assert len(result) == 3
 
     def test_returns_subject_data(self):
-        result = load_all_subject_data(SAMPLE_FORM)
+        result = result = load_all_subject_data(
+            SAMPLE_FORM,
+            SAMPLE_SUBJECT_NAME_RANGE,
+            SAMPLE_TOTAL_QUESTIONS_RANGE,
+            SAMPLE_PERCENTAGE_RANGE,
+            SAMPLE_GENERATED_NUMBERS_RANGE,
+        )
         subject1 = result[0]
         subject2 = result[1]
         subject3 = result[2]

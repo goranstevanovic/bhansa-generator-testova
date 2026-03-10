@@ -140,12 +140,18 @@ def load_generated_numbers(file: Path, cell_range: str) -> list[list[int]]:
     return generated_numbers
 
 
-def load_all_subject_data(file: Path) -> list[SubjectData]:
+def load_all_subject_data(
+    file: Path,
+    subject_titles_cell_range: str,
+    total_questions_cell_range: str,
+    percentages_cell_range: str,
+    generated_numbers_cell_range: str,
+) -> list[SubjectData]:
     """Load complete data for each subject."""
-    subject_titles = load_subject_titles(file, SUBJECT_NAME_RANGE)
-    total_questions = load_total_questions(file, TOTAL_QUESTIONS_RANGE)
-    percentages = load_percentages(file, PERCENTAGE_RANGE)
-    generated_numbers = load_generated_numbers(file, GENERATED_NUMBERS_RANGE)
+    subject_titles = load_subject_titles(file, subject_titles_cell_range)
+    total_questions = load_total_questions(file, total_questions_cell_range)
+    percentages = load_percentages(file, percentages_cell_range)
+    generated_numbers = load_generated_numbers(file, generated_numbers_cell_range)
 
     subjects: list[SubjectData] = []
 
