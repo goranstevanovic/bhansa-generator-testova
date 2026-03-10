@@ -66,7 +66,7 @@ def load_employee_data(file: Path, cell: str) -> EmployeeData:
     }
 
 
-def load_subject_titles(file: Path) -> list[dict]:
+def load_subject_titles(file: Path, cell_range: str) -> list[dict]:
     """Load subject titles and abbreviations."""
     workbook = openpyxl.load_workbook(file, data_only=True)
     sheet = workbook.active
@@ -76,7 +76,7 @@ def load_subject_titles(file: Path) -> list[dict]:
 
     subjects = []
 
-    for row in sheet[SUBJECT_NAME_RANGE]:
+    for row in sheet[cell_range]:
         cell_value = str(row[0].value or "")
         abbrev = _parse_subject_abbreviation(cell_value)
         title = _parse_subject_title(cell_value)
@@ -142,7 +142,7 @@ def load_generated_numbers(file: Path) -> list[list[int]]:
 
 def load_all_subject_data(file: Path) -> list[SubjectData]:
     """Load complete data for each subject."""
-    subject_titles = load_subject_titles(file)
+    subject_titles = load_subject_titles(file, SUBJECT_NAME_RANGE)
     total_questions = load_total_questions(file)
     percentages = load_percentages(file)
     generated_numbers = load_generated_numbers(file)

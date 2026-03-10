@@ -16,6 +16,7 @@ from reader import (
 )
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
+SAMPLE_SUBJECT_NAME_RANGE = "A10:A29"
 
 
 # Tests for _load_cell_value()
@@ -95,18 +96,20 @@ class TestLoadEmployeeData:
 # Tests for load_subject_titles()
 class TestLoadSubjectTitles:
     def test_returns_list(self):
-        result = load_subject_titles(SAMPLE_FORM)
+        result = load_subject_titles(SAMPLE_FORM, SAMPLE_SUBJECT_NAME_RANGE)
 
         assert isinstance(result, list)
 
     def test_list_contains_dicts(self):
-        result = load_subject_titles(SAMPLE_FORM)
+        result = load_subject_titles(SAMPLE_FORM, SAMPLE_SUBJECT_NAME_RANGE)
+
+        print(result)
 
         assert "abbreviation" in result[0]
         assert "title" in result[0]
 
     def test_loads_correct_abbreviations_and_titles(self):
-        subjects = load_subject_titles(SAMPLE_FORM)
+        subjects = load_subject_titles(SAMPLE_FORM, SAMPLE_SUBJECT_NAME_RANGE)
         subject1, subject2, subject3 = subjects
 
         expected_subject1_abbreviation = "npo"
