@@ -6,12 +6,6 @@ from pathlib import Path
 import openpyxl
 
 from models import EmployeeData, SubjectData
-from config import (
-    SUBJECT_NAME_RANGE,
-    TOTAL_QUESTIONS_RANGE,
-    PERCENTAGE_RANGE,
-    GENERATED_NUMBERS_RANGE,
-)
 
 
 def _load_cell_value(file: Path, cell: str) -> str:
