@@ -119,7 +119,7 @@ def load_percentages(file: Path, cell_range: str) -> list[int]:
     return _load_numeric_values(file, start, end)
 
 
-def load_generated_numbers(file: Path) -> list[list[int]]:
+def load_generated_numbers(file: Path, cell_range: str) -> list[list[int]]:
     """Load generated question numbers for each subject."""
     workbook = openpyxl.load_workbook(file, data_only=True)
     sheet = workbook.active
@@ -130,7 +130,7 @@ def load_generated_numbers(file: Path) -> list[list[int]]:
 
     generated_numbers = []
 
-    for row in sheet[GENERATED_NUMBERS_RANGE]:
+    for row in sheet[cell_range]:
         cell_value = str(row[0].value or "")
 
         if pattern.search(cell_value):
@@ -145,7 +145,7 @@ def load_all_subject_data(file: Path) -> list[SubjectData]:
     subject_titles = load_subject_titles(file, SUBJECT_NAME_RANGE)
     total_questions = load_total_questions(file, TOTAL_QUESTIONS_RANGE)
     percentages = load_percentages(file, PERCENTAGE_RANGE)
-    generated_numbers = load_generated_numbers(file)
+    generated_numbers = load_generated_numbers(file, GENERATED_NUMBERS_RANGE)
 
     subjects: list[SubjectData] = []
 

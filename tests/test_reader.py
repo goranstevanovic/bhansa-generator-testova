@@ -19,6 +19,7 @@ SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
 SAMPLE_SUBJECT_NAME_RANGE = "A10:A29"
 SAMPLE_TOTAL_QUESTIONS_RANGE = "D10:D29"
 SAMPLE_PERCENTAGE_RANGE = "E10:E29"
+SAMPLE_GENERATED_NUMBERS_RANGE = "F10:F29"
 
 
 # Tests for _load_cell_value()
@@ -161,14 +162,14 @@ class TestLoadPercentages:
 # Tests for load_generated_numbers()
 class TestLoadGeneratedNumbers:
     def test_returns_nested_list_of_integers(self):
-        result = load_generated_numbers(SAMPLE_FORM)
+        result = load_generated_numbers(SAMPLE_FORM, SAMPLE_GENERATED_NUMBERS_RANGE)
 
         assert isinstance(result, list)
         assert all(isinstance(x, list) for x in result)
         assert all(isinstance(x, int) for nums in result for x in nums)
 
     def test_returns_list_of_generated_numbers(self):
-        results = load_generated_numbers(SAMPLE_FORM)
+        results = load_generated_numbers(SAMPLE_FORM, SAMPLE_GENERATED_NUMBERS_RANGE)
         result1, result2, result3 = results
 
         expected_result1 = [1, 2, 6, 8, 10]
