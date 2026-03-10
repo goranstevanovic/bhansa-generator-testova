@@ -17,6 +17,7 @@ from reader import (
 
 SAMPLE_FORM = Path("tests/fixtures/test-form.xlsm")
 SAMPLE_SUBJECT_NAME_RANGE = "A10:A29"
+SAMPLE_TOTAL_QUESTIONS_RANGE = "D10:D29"
 
 
 # Tests for _load_cell_value()
@@ -141,7 +142,7 @@ class TestLoadNumericValues:
 # Tests for load_total_questions()
 class TestLoadTotalQuestions:
     def test_returns_list_of_total_questions(self):
-        result = load_total_questions(SAMPLE_FORM)
+        result = load_total_questions(SAMPLE_FORM, SAMPLE_TOTAL_QUESTIONS_RANGE)
         expected_result = [10, 9, 8]
 
         assert result == expected_result
