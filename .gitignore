@@ -221,6 +221,9 @@ __marimo__/
 # Temporary files
 .~*
 
+# Temporary folders
+tmp/
+
 # Questions generator Excel files
 TRE.FORM.*.xlsm
 
