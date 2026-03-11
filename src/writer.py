@@ -45,7 +45,7 @@ def create_cover_page(subject: SubjectData) -> Path:
     return temp_file
 
 
-def generate_test_for_subject(subject: SubjectData, employee: EmployeeData) -> Document:
+def generate_test_for_subject(subject: SubjectData, employee: EmployeeData) -> Path:
     """Merge cover page with selected question files."""
     subject_abbrev = subject["abbreviation"]
 
@@ -97,3 +97,5 @@ def generate_test_for_subject(subject: SubjectData, employee: EmployeeData) -> D
     test_document = Doc(str(output_file_path))
     test_document.paragraphs[0].clear()
     test_document.save(output_file_path)
+
+    return output_file_path
