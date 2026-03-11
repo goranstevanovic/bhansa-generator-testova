@@ -35,7 +35,6 @@ def create_cover_page(subject: SubjectData) -> Path:
     }
     cover_page.render(context)
 
-    # temp_file = Path(f"/cover-{subject['abbreviation']}.docx")
     temp_file = TEMPORARY_PATH / f"cover-{subject['abbreviation']}.docx"
     temp_file.parent.mkdir(parents=True, exist_ok=True)
     cover_page.save(str(temp_file))
