@@ -20,6 +20,7 @@ BASE_PATH = Path("baza")
 QUESTIONS_PATH = BASE_PATH / "pitanja"
 TEMPLATES_PATH = BASE_PATH / "predlosci"
 OUTPUT_PATH = Path("generisani-testovi")
+TEMPORARY_PATH = Path("tmp")
 
 # Question bank locations
 QUESTION_BANKS = {
@@ -33,3 +34,5 @@ QUESTION_BANKS = {
 
 # Cover page template file
 COVER_TEMPLATE = TEMPLATES_PATH / "template-naslovna.docx"
+TEMPLATE_TITLE_STRING = "naziv"
+TEMPLATE_ABBREVIATION_STRING = "skracenica"
