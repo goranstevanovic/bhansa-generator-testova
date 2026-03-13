@@ -10,6 +10,7 @@ from writer import (
     create_output_document_path,
     create_cover_page,
     generate_test_for_subject,
+    generate_all_tests,
 )
 
 FIXTURES_PATH = Path("tests/fixtures")
@@ -36,6 +37,30 @@ def sample_subject():
         "total_questions": 10,
         "percentage": 40,
         "generated_numbers": [1, 4, 7, 10],
+    }
+
+
+# Sample subject 2
+@pytest.fixture
+def sample_subject_2():
+    return {
+        "abbreviation": "ndo",
+        "title": "naziv druge oblasti",
+        "total_questions": 8,
+        "percentage": 50,
+        "generated_numbers": [1, 3, 5, 7],
+    }
+
+
+# Sample subject 3
+@pytest.fixture
+def sample_subject_3():
+    return {
+        "abbreviation": "nto",
+        "title": "naziv treće oblasti",
+        "total_questions": 6,
+        "percentage": 60,
+        "generated_numbers": [2, 3, 4, 5],
     }
 
 
@@ -160,3 +185,22 @@ class TestGenerateTestForSubject:
         assert pitanje6 not in full_text
         assert pitanje8 not in full_text
         assert pitanje9 not in full_text
+
+
+# Tests for generate_all_tests()
+class TestGenerateAllTests:
+    @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
+    @patch("writer.COVER_TEMPLATE", SAMPLE_COVER_TEMPLATE)
+    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
+    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
+    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
+    @patch("writer.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
+    def test_generates_test_files_for_all_subjects(
+        self, sample_subject, sample_subject_2, sample_subject_3, sample_employee
+    ):
+        subjects = [sample_subject, sample_subject_2, sample_subject_3]
+
+        results = generate_all_tests(subjects, sample_employee)
+
+        assert len(results) == 3
+        assert all(res.exists() for res in results)
