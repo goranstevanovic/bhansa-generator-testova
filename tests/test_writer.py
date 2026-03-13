@@ -64,6 +64,23 @@ def sample_subject_3():
     }
 
 
+# Sample questions
+@pytest.fixture
+def sample_questions():
+    return {
+        "pitanje1": "1. Naziv prve oblasti: Prvo pitanje",
+        "pitanje2": "Naziv prve oblasti: Drugo pitanje",
+        "pitanje3": "Naziv prve oblasti: Treće pitanje",
+        "pitanje4": "2. Naziv prve oblasti: Četvrto pitanje",
+        "pitanje5": "Naziv prve oblasti: Peto pitanje",
+        "pitanje6": "Naziv prve oblasti: Šesto pitanje",
+        "pitanje7": "3. Naziv prve oblasti: Sedmo pitanje",
+        "pitanje8": "Naziv prve oblasti: Osmo pitanje",
+        "pitanje9": "Naziv prve oblasti: Deveto pitanje",
+        "pitanje10": "4. Naziv prve oblasti: Deseto pitanje",
+    }
+
+
 # Tests for create_output_document_path()
 class TestCreateOutputDocumentPath:
     @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
@@ -149,7 +166,7 @@ class TestGenerateTestForSubject:
     @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
     @patch("writer.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
     def test_generated_test_file_contains_selected_questions(
-        self, sample_subject, sample_employee
+        self, sample_subject, sample_employee, sample_questions
     ):
         result = generate_test_for_subject(sample_subject, sample_employee)
 
@@ -159,32 +176,19 @@ class TestGenerateTestForSubject:
         # Get all text from documents
         full_text = "\n".join([paragraph.text for paragraph in doc.paragraphs])
 
-        # Sample questions
-        # Questions 1, 4, 7, and 10 should be in generated test
-        pitanje1 = "1. Naziv prve oblasti: Prvo pitanje"
-        pitanje2 = "Naziv prve oblasti: Drugo pitanje"
-        pitanje3 = "Naziv prve oblasti: Treće pitanje"
-        pitanje4 = "2. Naziv prve oblasti: Četvrto pitanje"
-        pitanje5 = "Naziv prve oblasti: Peto pitanje"
-        pitanje6 = "Naziv prve oblasti: Šesto pitanje"
-        pitanje7 = "3. Naziv prve oblasti: Sedmo pitanje"
-        pitanje8 = "Naziv prve oblasti: Osmo pitanje"
-        pitanje9 = "Naziv prve oblasti: Deveto pitanje"
-        pitanje10 = "4. Naziv prve oblasti: Deseto pitanje"
-
         # Assert selcted questions are in document
-        assert pitanje1 in full_text
-        assert pitanje4 in full_text
-        assert pitanje7 in full_text
-        assert pitanje10 in full_text
+        assert sample_questions["pitanje4"] in full_text
+        assert sample_questions["pitanje1"] in full_text
+        assert sample_questions["pitanje7"] in full_text
+        assert sample_questions["pitanje10"] in full_text
 
         # Assert non-selected questions are not in document
-        assert pitanje2 not in full_text
-        assert pitanje3 not in full_text
-        assert pitanje5 not in full_text
-        assert pitanje6 not in full_text
-        assert pitanje8 not in full_text
-        assert pitanje9 not in full_text
+        assert sample_questions["pitanje2"] not in full_text
+        assert sample_questions["pitanje3"] not in full_text
+        assert sample_questions["pitanje5"] not in full_text
+        assert sample_questions["pitanje6"] not in full_text
+        assert sample_questions["pitanje8"] not in full_text
+        assert sample_questions["pitanje9"] not in full_text
 
 
 # Tests for generate_all_tests()
