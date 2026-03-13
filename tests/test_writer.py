@@ -14,12 +14,12 @@ from writer import (
 )
 
 FIXTURES_PATH = Path("tests/fixtures")
+SAMPLE_QUESTIONS_PATH = FIXTURES_PATH / "baza" / "pitanja"
 SAMPLE_OUTPUT_PATH = FIXTURES_PATH / "output"
-SAMPLE_COVER_TEMPLATE = FIXTURES_PATH / "baza" / "predlosci" / "template-naslovna.docx"
 SAMPLE_TEMPORARY_PATH = FIXTURES_PATH / "tmp"
+SAMPLE_COVER_TEMPLATE = FIXTURES_PATH / "baza" / "predlosci" / "template-naslovna.docx"
 SAMPLE_TEMPLATE_TITLE_STRING = "naziv"
 SAMPLE_TEMPLATE_ABBREVIATION_STRING = "skracenica"
-SAMPLE_QUESTIONS_PATH = FIXTURES_PATH / "baza" / "pitanja"
 
 
 # Sample employee
