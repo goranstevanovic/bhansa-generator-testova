@@ -228,7 +228,8 @@ tmp/
 TRE.FORM.*.xlsm
 
 # Questions and answers database
-baza/
+# (production version, test version is not ignored)
+/baza/
 
 # Generated tests and answers
 generisani-testovi/
