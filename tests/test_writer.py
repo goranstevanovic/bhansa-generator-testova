@@ -89,20 +89,12 @@ class TestCreateOutputDocumentPath:
     ):
         result = create_output_document_path(sample_subject, sample_employee)
 
-        # Folder for generated tests
-        expected_result = f"{SAMPLE_OUTPUT_PATH}/"
-
-        # Folder with candidate's name and license number
-        expected_result += f"{sample_employee['name']} {sample_employee['license']}/"
-
-        # File name: candidate's name part
-        expected_result += f"{sample_employee['name']}"
-        # File name: candidate's license number part
-        expected_result += f" {sample_employee['license']}"
-        # File name: subject abbreviation (uppercase) part
-        expected_result += f" {sample_subject['abbreviation'].upper()}"
-        # File name: file extension
-        expected_result += ".docx"
+        expected_result = (
+            f"{SAMPLE_OUTPUT_PATH}/"
+            f"{sample_employee['name']} {sample_employee['license']}/"
+            f"{sample_employee['name']} {sample_employee['license']} "
+            f"{sample_subject['abbreviation'].upper()}.docx"
+        )
 
         assert str(result) == expected_result
 
