@@ -79,11 +79,11 @@ class TestCreateOutputDocumentPath:
         expected_result += f"{sample_employee['name']} {sample_employee['license']}/"
 
         # File name: candidate's name part
-        expected_result += f"{sample_employee["name"]}"
+        expected_result += f"{sample_employee['name']}"
         # File name: candidate's license number part
-        expected_result += f" {sample_employee["license"]}"
+        expected_result += f" {sample_employee['license']}"
         # File name: subject abbreviation (uppercase) part
-        expected_result += f" {sample_subject["abbreviation"].upper()}"
+        expected_result += f" {sample_subject['abbreviation'].upper()}"
         # File name: file extension
         expected_result += ".docx"
 
