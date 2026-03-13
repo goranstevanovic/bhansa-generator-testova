@@ -6,7 +6,11 @@ from unittest.mock import patch
 import pytest
 from docx import Document
 
-from writer import create_output_document_path, create_cover_page
+from writer import (
+    create_output_document_path,
+    create_cover_page,
+    generate_test_for_subject,
+)
 
 FIXTURES_PATH = Path("tests/fixtures")
 SAMPLE_OUTPUT_PATH = FIXTURES_PATH / "output"
@@ -14,6 +18,7 @@ SAMPLE_COVER_TEMPLATE = FIXTURES_PATH / "baza" / "predlosci" / "template-naslovn
 SAMPLE_TEMPORARY_PATH = FIXTURES_PATH / "tmp"
 SAMPLE_TEMPLATE_TITLE_STRING = "naziv"
 SAMPLE_TEMPLATE_ABBREVIATION_STRING = "skracenica"
+SAMPLE_QUESTIONS_PATH = FIXTURES_PATH / "baza" / "pitanja"
 
 
 # Sample employee
@@ -94,3 +99,64 @@ class TestCreateCoverPage:
         # Assert text is present
         assert "naziv prve oblasti" in full_text
         assert "npo" in full_text
+
+
+# Tests for generate_test_for_subject()
+class TestGenerateTestForSubject:
+    @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
+    @patch("writer.COVER_TEMPLATE", SAMPLE_COVER_TEMPLATE)
+    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
+    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
+    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
+    @patch("writer.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
+    def test_generates_test_file_for_single_subject(
+        self, sample_subject, sample_employee
+    ):
+        result = generate_test_for_subject(sample_subject, sample_employee)
+
+        assert result.exists()
+        assert result.suffix == ".docx"
+
+    @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
+    @patch("writer.COVER_TEMPLATE", SAMPLE_COVER_TEMPLATE)
+    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
+    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
+    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
+    @patch("writer.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
+    def test_generated_test_file_contains_selected_questions(
+        self, sample_subject, sample_employee
+    ):
+        result = generate_test_for_subject(sample_subject, sample_employee)
+
+        # Open created document
+        doc = Document(result)
+
+        # Get all text from documents
+        full_text = "\n".join([paragraph.text for paragraph in doc.paragraphs])
+
+        # Sample questions
+        # Questions 1, 4, 7, and 10 should be in generated test
+        pitanje1 = "1. Naziv prve oblasti: Prvo pitanje"
+        pitanje2 = "Naziv prve oblasti: Drugo pitanje"
+        pitanje3 = "Naziv prve oblasti: Treće pitanje"
+        pitanje4 = "2. Naziv prve oblasti: Četvrto pitanje"
+        pitanje5 = "Naziv prve oblasti: Peto pitanje"
+        pitanje6 = "Naziv prve oblasti: Šesto pitanje"
+        pitanje7 = "3. Naziv prve oblasti: Sedmo pitanje"
+        pitanje8 = "Naziv prve oblasti: Osmo pitanje"
+        pitanje9 = "Naziv prve oblasti: Deveto pitanje"
+        pitanje10 = "4. Naziv prve oblasti: Deseto pitanje"
+
+        # Assert selcted questions are in document
+        assert pitanje1 in full_text
+        assert pitanje4 in full_text
+        assert pitanje7 in full_text
+        assert pitanje10 in full_text
+
+        # Assert non-selected questions are not in document
+        assert pitanje2 not in full_text
+        assert pitanje3 not in full_text
+        assert pitanje5 not in full_text
+        assert pitanje6 not in full_text
+        assert pitanje8 not in full_text
+        assert pitanje9 not in full_text
