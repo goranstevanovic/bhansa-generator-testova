@@ -76,7 +76,7 @@ class TestCreateOutputDocumentPath:
         expected_result = f"{SAMPLE_OUTPUT_PATH}/"
 
         # Folder with candidate's name and license number
-        expected_result += f"{sample_employee["name"]} {sample_employee["license"]}/"
+        expected_result += f"{sample_employee['name']} {sample_employee['license']}/"
 
         # File name: candidate's name part
         expected_result += f"{sample_employee["name"]}"
