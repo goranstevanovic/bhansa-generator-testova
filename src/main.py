@@ -13,7 +13,12 @@ from config import (
 )
 from reader import load_employee_data, load_all_subject_data
 from writer import generate_all_tests
-from ui import print_title, print_candidate_info, print_assessor_info
+from ui import (
+    print_title,
+    print_candidate_info,
+    print_assessor_info,
+    print_subjects_summary,
+)
 
 
 def main():
@@ -37,27 +42,7 @@ def main():
     print_title()
     print_candidate_info(candidate)
     print_assessor_info(assessor)
-
-    # Print all subjects' information
-    print(f"Broj pronađenih oblasti u generatoru pitanja: {len(subjects)}")
-    print()
-
-    for i, subject in enumerate(subjects, 1):
-        abbrev = subject["abbreviation"]
-        title = subject["title"]
-        total_questions = subject["total_questions"]
-        percentage = subject["percentage"]
-        generated_questions_qty = round(total_questions * percentage / 100)
-        generated_numbers = ", ".join(str(num) for num in subject["generated_numbers"])
-
-        print(f"{i}. {abbrev.upper()}")
-        print(f"   {title.capitalize()}")
-        print(f"       Ukupan broj pitanja: {total_questions}")
-        print(f"       Procenat pitanja za generisanje: {percentage}%")
-        print(f"       Broj pitanja za generisanje: {generated_questions_qty}")
-        print(f"       Generisani brojevi pitanja:")
-        print(f"         {generated_numbers}")
-        print()
+    print_subjects_summary(subjects)
 
     # Generate tests
     generate_all_tests(subjects, candidate)
