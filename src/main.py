@@ -39,11 +39,10 @@ def main():
     for subject in subjects:
         print(subject)
 
+    # Generate tests
     generate_all_tests(subjects, candidate)
 
     print("Tests generated.")
-
-    # Generate tests
 
 
 if __name__ == "__main__":
