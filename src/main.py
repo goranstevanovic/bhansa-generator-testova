@@ -43,6 +43,11 @@ def main():
     print(candidate["name"], candidate["license"])
     print()
 
+    # Print assessor's information
+    print("ASSE ime, prezime i serijski broj dozvole:")
+    print(assessor["name"], assessor["license"])
+    print()
+
     # Generate tests
     generate_all_tests(subjects, candidate)
 
