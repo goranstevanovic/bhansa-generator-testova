@@ -74,6 +74,9 @@ def main():
 
     print("Svi testovi su generisani")
 
+    # Wait for user input before exiting
+    input("\nPritisnite Enter za izlaz...")
+
 
 if __name__ == "__main__":
     main()
