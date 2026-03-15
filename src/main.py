@@ -13,6 +13,7 @@ from config import (
 )
 from reader import load_employee_data, load_all_subject_data
 from writer import generate_all_tests
+from ui import print_title
 
 
 def main():
@@ -33,10 +34,7 @@ def main():
         GENERATED_NUMBERS_RANGE,
     )
 
-    # Print title
-    print()
-    print("\tGENERATOR TESTOVA")
-    print()
+    print_title()
 
     # Print candidate's information
     print("KVS ime, prezime i serijski broj dozvole:")
