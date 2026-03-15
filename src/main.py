@@ -33,6 +33,11 @@ def main():
         GENERATED_NUMBERS_RANGE,
     )
 
+    # Print title
+    print()
+    print("\tGENERATOR TESTOVA")
+    print()
+
     # Generate tests
     generate_all_tests(subjects, candidate)
 
