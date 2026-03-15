@@ -54,3 +54,7 @@ def print_test_generation_done(generated_tests):
     for test in generated_tests:
         file_name = str(test).split("/")[2]
         print(f"  - {file_name}")
+
+
+def wait_for_exit():
+    input("\nPritisnite Enter za izlaz iz programa...")

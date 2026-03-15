@@ -19,6 +19,7 @@ from ui import (
     print_assessor_info,
     print_subjects_summary,
     print_test_generation_done,
+    wait_for_exit,
 )
 
 
@@ -50,8 +51,7 @@ def main():
 
     print_test_generation_done(generated_tests)
 
-    # Wait for user input before exiting
-    input("\nPritisnite Enter za izlaz...")
+    wait_for_exit()
 
 
 if __name__ == "__main__":
