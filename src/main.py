@@ -72,6 +72,8 @@ def main():
     # Generate tests
     generate_all_tests(subjects, candidate)
 
+    print("Svi testovi su generisani")
+
 
 if __name__ == "__main__":
     main()
