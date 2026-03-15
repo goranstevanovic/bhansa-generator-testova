@@ -13,7 +13,7 @@ from config import (
 )
 from reader import load_employee_data, load_all_subject_data
 from writer import generate_all_tests
-from ui import print_title, print_candidate_info
+from ui import print_title, print_candidate_info, print_assessor_info
 
 
 def main():
@@ -36,11 +36,7 @@ def main():
 
     print_title()
     print_candidate_info(candidate)
-
-    # Print assessor's information
-    print("ASSE ime, prezime i serijski broj dozvole:")
-    print(assessor["name"], assessor["license"])
-    print()
+    print_assessor_info(assessor)
 
     # Print all subjects' information
     print(f"Broj pronađenih oblasti u generatoru pitanja: {len(subjects)}")
