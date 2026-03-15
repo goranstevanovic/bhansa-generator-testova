@@ -24,9 +24,6 @@ def main():
     candidate = load_employee_data(form_file, CANDIDATE_CELL)
     assessor = load_employee_data(form_file, ASSESSOR_CELL)
 
-    print(candidate)
-    print(assessor)
-
     # Load all subject data
     subjects = load_all_subject_data(
         form_file,
@@ -36,13 +33,8 @@ def main():
         GENERATED_NUMBERS_RANGE,
     )
 
-    for subject in subjects:
-        print(subject)
-
     # Generate tests
     generate_all_tests(subjects, candidate)
-
-    print("Tests generated.")
 
 
 if __name__ == "__main__":
