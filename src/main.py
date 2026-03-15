@@ -38,6 +38,11 @@ def main():
     print("\tGENERATOR TESTOVA")
     print()
 
+    # Print candidate's information
+    print("KVS ime, prezime i serijski broj dozvole:")
+    print(candidate["name"], candidate["license"])
+    print()
+
     # Generate tests
     generate_all_tests(subjects, candidate)
 
