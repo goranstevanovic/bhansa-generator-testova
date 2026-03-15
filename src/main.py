@@ -12,6 +12,7 @@ from config import (
     GENERATED_NUMBERS_RANGE,
 )
 from reader import load_employee_data, load_all_subject_data
+from writer import generate_all_tests
 
 
 def main():
@@ -37,6 +38,12 @@ def main():
 
     for subject in subjects:
         print(subject)
+
+    generate_all_tests(subjects, candidate)
+
+    print("Tests generated.")
+
+    # Generate tests
 
 
 if __name__ == "__main__":
