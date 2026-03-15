@@ -42,3 +42,15 @@ def print_subjects_summary(subjects: list[SubjectData]):
         print(f"       Generisani brojevi pitanja:")
         print(f"         {generated_numbers}")
         print()
+
+
+def print_test_generation_done(generated_tests):
+    output_folder, candidate_folder, _ = str(generated_tests[0]).split("/")
+
+    print("Testovi su generisani.")
+    print()
+    print(f"Testovi su sačuvani u folderu '{output_folder}' / '{candidate_folder}'")
+
+    for test in generated_tests:
+        file_name = str(test).split("/")[2]
+        print(f"  - {file_name}")

@@ -18,6 +18,7 @@ from ui import (
     print_candidate_info,
     print_assessor_info,
     print_subjects_summary,
+    print_test_generation_done,
 )
 
 
@@ -45,9 +46,9 @@ def main():
     print_subjects_summary(subjects)
 
     # Generate tests
-    generate_all_tests(subjects, candidate)
+    generated_tests = generate_all_tests(subjects, candidate)
 
-    print("Svi testovi su generisani")
+    print_test_generation_done(generated_tests)
 
     # Wait for user input before exiting
     input("\nPritisnite Enter za izlaz...")
