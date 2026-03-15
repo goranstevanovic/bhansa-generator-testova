@@ -2,6 +2,9 @@
 
 from pathlib import Path
 
+# Program information
+PROGRAM_TITLE = "GENERATOR TESTOVA"
+
 # Question number generator file
 QUESTIONS_GENERATOR = "TRE.FORM.371.xlsm"
 

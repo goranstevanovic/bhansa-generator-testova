@@ -13,6 +13,14 @@ from config import (
 )
 from reader import load_employee_data, load_all_subject_data
 from writer import generate_all_tests
+from ui import (
+    print_title,
+    print_candidate_info,
+    print_assessor_info,
+    print_subjects_summary,
+    print_test_generation_done,
+    wait_for_exit,
+)
 
 
 def main():
@@ -33,49 +41,17 @@ def main():
         GENERATED_NUMBERS_RANGE,
     )
 
-    # Print title
-    print()
-    print("\tGENERATOR TESTOVA")
-    print()
-
-    # Print candidate's information
-    print("KVS ime, prezime i serijski broj dozvole:")
-    print(candidate["name"], candidate["license"])
-    print()
-
-    # Print assessor's information
-    print("ASSE ime, prezime i serijski broj dozvole:")
-    print(assessor["name"], assessor["license"])
-    print()
-
-    # Print all subjects' information
-    print(f"Broj pronađenih oblasti u generatoru pitanja: {len(subjects)}")
-    print()
-
-    for i, subject in enumerate(subjects, 1):
-        abbrev = subject["abbreviation"]
-        title = subject["title"]
-        total_questions = subject["total_questions"]
-        percentage = subject["percentage"]
-        generated_questions_qty = round(total_questions * percentage / 100)
-        generated_numbers = ", ".join(str(num) for num in subject["generated_numbers"])
-
-        print(f"{i}. {abbrev.upper()}")
-        print(f"   {title.capitalize()}")
-        print(f"       Ukupan broj pitanja: {total_questions}")
-        print(f"       Procenat pitanja za generisanje: {percentage}%")
-        print(f"       Broj pitanja za generisanje: {generated_questions_qty}")
-        print(f"       Generisani brojevi pitanja:")
-        print(f"         {generated_numbers}")
-        print()
+    print_title()
+    print_candidate_info(candidate)
+    print_assessor_info(assessor)
+    print_subjects_summary(subjects)
 
     # Generate tests
-    generate_all_tests(subjects, candidate)
+    generated_tests = generate_all_tests(subjects, candidate)
 
-    print("Svi testovi su generisani")
+    print_test_generation_done(generated_tests)
 
-    # Wait for user input before exiting
-    input("\nPritisnite Enter za izlaz...")
+    wait_for_exit()
 
 
 if __name__ == "__main__":
