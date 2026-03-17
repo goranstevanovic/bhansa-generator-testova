@@ -21,6 +21,7 @@ from ui import (
     print_test_generation_done,
     wait_for_exit,
 )
+from file_utils import delete_tmp_folder
 
 
 def main():
@@ -50,6 +51,9 @@ def main():
     generated_tests = generate_all_tests(subjects, candidate)
 
     print_test_generation_done(generated_tests)
+
+    # Delete temporay folder
+    delete_tmp_folder()
 
     wait_for_exit()
 
