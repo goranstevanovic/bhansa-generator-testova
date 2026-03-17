@@ -24,7 +24,7 @@ from ui import (
 from file_utils import delete_tmp_folder
 
 
-def main():
+def main() -> None:
     """Run test generator."""
     # Load questions generator form file
     form_file = Path(QUESTIONS_GENERATOR)
