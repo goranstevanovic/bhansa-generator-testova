@@ -18,3 +18,10 @@ class SubjectData(TypedDict):
     total_questions: int
     percentage: int
     generated_numbers: list[int]
+
+
+class SubjectTitle(TypedDict):
+    """Simple data about a single subject."""
+
+    abbreviation: str
+    title: str

@@ -1,28 +1,30 @@
 """User interface functions."""
 
+from pathlib import Path
+
 from config import PROGRAM_TITLE
 from models import EmployeeData, SubjectData
 
 
-def print_title():
+def print_title() -> None:
     print()
     print(PROGRAM_TITLE)
     print()
 
 
-def print_candidate_info(candidate: EmployeeData):
+def print_candidate_info(candidate: EmployeeData) -> None:
     print("KVS ime, prezime, serijski broj dozvole:")
     print(candidate["name"], candidate["license"])
     print()
 
 
-def print_assessor_info(assessor: EmployeeData):
+def print_assessor_info(assessor: EmployeeData) -> None:
     print("ASSE ime, prezime, serijski broj dozvole:")
     print(assessor["name"], assessor["license"])
     print()
 
 
-def print_subjects_summary(subjects: list[SubjectData]):
+def print_subjects_summary(subjects: list[SubjectData]) -> None:
     print(f"Broj pronađenih oblasti u generatoru pitanja: {len(subjects)}")
     print()
 
@@ -44,7 +46,7 @@ def print_subjects_summary(subjects: list[SubjectData]):
         print()
 
 
-def print_test_generation_done(generated_tests):
+def print_test_generation_done(generated_tests: list[Path]) -> None:
     output_folder, candidate_folder, _ = str(generated_tests[0]).split("/")
 
     print("Testovi su generisani.")
@@ -56,5 +58,5 @@ def print_test_generation_done(generated_tests):
         print(f"  - {file_name}")
 
 
-def wait_for_exit():
+def wait_for_exit() -> None:
     input("\nPritisnite Enter za izlaz iz programa...")
