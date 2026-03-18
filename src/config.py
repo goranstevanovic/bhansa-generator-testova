@@ -25,16 +25,6 @@ TEMPLATES_PATH = BASE_PATH / "predlosci"
 OUTPUT_PATH = Path("generisani-testovi")
 TEMPORARY_PATH = Path("tmp")
 
-# Question bank locations
-QUESTION_BANKS = {
-    "ass": QUESTIONS_PATH / "ass",
-    "emr": QUESTIONS_PATH / "emr",
-    "eqp": QUESTIONS_PATH / "eqp",
-    "lgc": QUESTIONS_PATH / "lgc",
-    "lnf": QUESTIONS_PATH / "lnf",
-    "lpi": QUESTIONS_PATH / "lpi",
-}
-
 # Cover page template file
 COVER_TEMPLATE = TEMPLATES_PATH / "template-naslovna.docx"
 TEMPLATE_TITLE_STRING = "naziv"
