@@ -13,6 +13,8 @@
           -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir,
           "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
           "Helvetica Neue", sans-serif;
+        --mono-font:
+          Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
 
         --border-width: 1px;
         --border: #898ea4;
@@ -70,6 +72,11 @@
       ul,
       ol {
         padding: 0 1.1rem;
+      }
+
+      code {
+        font-family: var(--mono-font);
+        font-weight: bold;
       }
 
       footer hr {
