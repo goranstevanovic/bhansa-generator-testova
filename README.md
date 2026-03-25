@@ -17,6 +17,7 @@ _Generator Testova_ je program za automatsko generisanje testova za teorijsku pr
 # Korišćenje
 
 1. Preuzmite najnoviju verziju sa [stranice sa izdanjima](https://github.com/goranstevanovic/bhansa-generator-testova/releases)
-2. Raspakujte ZIP arhivu
-3. Popunite i sačuvajte Excel formular (_.xlsm_)
-4. Pokrenite `generator-testova.exe`
+1. Raspakujte ZIP arhivu
+1. Popunite folder `baza/pitanja` folderima i pitanjima za svaku oblast
+1. Priložite, popunite i sačuvajte Excel formular (_.xlsm_)
+1. Pokrenite `generator-testova.exe`
