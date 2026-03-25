@@ -9,3 +9,7 @@ _Generator Testova_ je program za automatsko generisanje testova za teorijsku pr
 - Sva podešavanja se unose u Excel formular
 - Automatsko generisanje Word dokumenata sa izabranim pitanjima za svaku oblast
 - Organizovanje generisanih testova u posebne foldere po kandidatu
+
+# Zahtijevi
+
+- Windows operativni sistem
