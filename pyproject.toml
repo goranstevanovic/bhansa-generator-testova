@@ -15,6 +15,7 @@ dev = [
     "pytest",
     "mypy",
     "types-openpyxl",
+    "pyinstaller",
 ]
 
 [tool.pytest.ini_options]
