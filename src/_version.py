@@ -1,0 +1,3 @@
+VERSION = "0.0.0"
+DATE = "0000-00-00"
+IS_TEST_BUILD = True
