@@ -56,7 +56,9 @@ def print_test_generation_done(generated_tests: list[Path]) -> None:
     print(f"Testovi su sačuvani u folderu '{output_folder}' / '{candidate_folder}'")
 
     for test in generated_tests:
-        file_name = str(test).split("/")[2]
+        normalized_path = os.path.normpath(test)
+        file_name = normalized_path.split(os.sep)[2]
+
         print(f"  - {file_name}")
 
 
