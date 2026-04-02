@@ -55,7 +55,8 @@ def create_version_number() -> str:
     if tag.startswith("v"):
         return tag[1:]
     else:
-        return f"{VERSION}-dev+{hash}"
+        # Use only x.x.x part, ignore - and rest
+        return f"{VERSION.split("-")[0]}-dev+{hash}"
 
 
 def run_pyinstaller(platform: str) -> None:
@@ -82,10 +83,8 @@ def main() -> None:
     # Determine if creating test build or not
     if get_current_commit_tag().startswith("v"):
         is_test_build = False
-        print("not test build")
     else:
         is_test_build = True
-        print("test build")
 
     # Run PyInstaller using platform-specific spec file
     run_pyinstaller(platform)
