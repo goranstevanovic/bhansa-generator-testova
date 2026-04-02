@@ -2,6 +2,7 @@
 """Build script"""
 
 import sys
+import subprocess
 
 import PyInstaller.__main__
 
@@ -19,6 +20,14 @@ def check_if_platform_supported(platform: str) -> bool:
         raise Exception(
             f"{platform} is not supported. Only Windows and Linux are supported."
         )
+
+
+def get_current_commit_tag() -> str:
+    """Get tag of current commit, if any."""
+    cmd = ["git", "tag", "--points-at", "HEAD"]
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    return result.stdout.strip()
 
 
 def run_pyinstaller(platform: str) -> None:
