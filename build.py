@@ -12,7 +12,7 @@ import PyInstaller.__main__
 from _version import VERSION
 
 VERSION_FILE_PATH = Path("src", "_version.py")
-BUNDLE_ROOT_FOOLDER = Path("dist", "generator-testova-bundle")
+BUNDLE_ROOT_FOLDER = Path("dist", "generator-testova-bundle")
 WINDOWS_EXE_PATH = Path("dist", "generator-testova.exe")
 LINUX_EXE_PATH = Path("dist", "generator-testova")
 
@@ -92,17 +92,17 @@ def run_pyinstaller(platform: str) -> None:
 
 def create_folder_structure():
     # If bundle folder exists, delete it, to start fresh
-    if os.path.exists(BUNDLE_ROOT_FOOLDER):
-        shutil.rmtree(BUNDLE_ROOT_FOOLDER)
+    if os.path.exists(BUNDLE_ROOT_FOLDER):
+        shutil.rmtree(BUNDLE_ROOT_FOLDER)
 
     # Create bundle folder
-    os.makedirs(BUNDLE_ROOT_FOOLDER)
+    os.makedirs(BUNDLE_ROOT_FOLDER)
 
     # Move executable file into bundle folder
     if get_platform() == "win32":
-        shutil.move(WINDOWS_EXE_PATH, BUNDLE_ROOT_FOOLDER)
+        shutil.move(WINDOWS_EXE_PATH, BUNDLE_ROOT_FOLDER)
     elif get_platform() == "linux":
-        shutil.move(LINUX_EXE_PATH, BUNDLE_ROOT_FOOLDER)
+        shutil.move(LINUX_EXE_PATH, BUNDLE_ROOT_FOLDER)
 
 
 def main() -> None:
