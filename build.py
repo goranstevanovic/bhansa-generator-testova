@@ -21,6 +21,16 @@ def check_if_platform_supported(platform: str) -> bool:
         )
 
 
+def run_pyinstaller(platform: str) -> None:
+    """Run PyInstaller using appropriate spec file."""
+    if platform == "win32":
+        spec_file = "generator-testova-win.spec"
+    elif platform == "linux":
+        spec_file = "generator-testova-linux.spec"
+
+    PyInstaller.__main__.run(["--clean", spec_file])
+
+
 def main() -> None:
     # Get OS/platform
     platform = get_platform()
@@ -31,6 +41,9 @@ def main() -> None:
     except Exception as err:
         print(err)
         sys.exit(1)
+
+    # Run PyInstaller using platform-specific spec file
+    run_pyinstaller(platform)
 
 
 if __name__ == "__main__":
