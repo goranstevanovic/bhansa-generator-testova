@@ -6,6 +6,8 @@ import subprocess
 
 import PyInstaller.__main__
 
+from _version import VERSION
+
 
 def get_platform() -> str:
     """Get OS/platform as a string."""
@@ -44,6 +46,16 @@ def get_current_commit_date() -> str:
 
     result = subprocess.run(cmd, capture_output=True, text=True)
     return result.stdout.strip()
+
+
+def create_version_number() -> str:
+    tag = get_current_commit_tag()
+    hash = get_current_commit_hash()
+
+    if tag.startswith("v"):
+        return tag[1:]
+    else:
+        return f"{VERSION}-dev+{hash}"
 
 
 def run_pyinstaller(platform: str) -> None:
