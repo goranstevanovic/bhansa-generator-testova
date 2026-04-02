@@ -11,11 +11,18 @@ import PyInstaller.__main__
 
 from _version import VERSION
 
+# File containing version number and date
 VERSION_FILE_PATH = Path("src", "_version.py")
+
+# Bundle folder temporary and final names
 BUNDLE_ROOT_FOLDER_TEMP_NAME = Path("dist", "generator-testova-bundle")
 BUNDLE_ROOT_FOLDER_FINAL_NAME = Path("dist", "generator-testova")
+
+# Generated executable files paths
 WINDOWS_EXE_PATH = Path("dist", "generator-testova.exe")
 LINUX_EXE_PATH = Path("dist", "generator-testova")
+
+# Templates, questions, answers, generated tests folder paths
 FOLDERS_TEMPLATES = ["baza/predlosci"]
 FOLDERS_QUESTIONS = [
     "baza/pitanja/ass",
@@ -179,6 +186,7 @@ def main() -> None:
     # Run PyInstaller using platform-specific spec file
     run_pyinstaller(platform)
 
+    # Create basic folder structure, empty folders, without files
     create_folder_structure()
 
 
