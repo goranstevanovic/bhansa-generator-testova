@@ -81,6 +81,21 @@ def update_version_file(is_test_build):
         file.write(version_file_content)
 
 
+def empty_dist_folder() -> None:
+    """Delete contents of dist folder before building to start fresh."""
+    # Check if folder with temp name exists
+    if os.path.exists(BUNDLE_ROOT_FOLDER_TEMP_NAME):
+        shutil.rmtree(BUNDLE_ROOT_FOLDER_TEMP_NAME)
+    # Check if folder or file with final name exists
+    elif os.path.exists(BUNDLE_ROOT_FOLDER_FINAL_NAME):
+        # Check if it is folder
+        if os.path.isdir(BUNDLE_ROOT_FOLDER_FINAL_NAME):
+            shutil.rmtree(BUNDLE_ROOT_FOLDER_FINAL_NAME)
+        # Check if it is file
+        elif os.path.isfile(BUNDLE_ROOT_FOLDER_FINAL_NAME):
+            os.remove(BUNDLE_ROOT_FOLDER_FINAL_NAME)
+
+
 def run_pyinstaller(platform: str) -> None:
     """Run PyInstaller using appropriate spec file."""
     if platform == "win32":
@@ -92,10 +107,6 @@ def run_pyinstaller(platform: str) -> None:
 
 
 def create_folder_structure():
-    # If bundle folder exists, delete it, to start fresh
-    if os.path.exists(BUNDLE_ROOT_FOLDER_TEMP_NAME):
-        shutil.rmtree(BUNDLE_ROOT_FOLDER_TEMP_NAME)
-
     # Create bundle folder
     os.makedirs(BUNDLE_ROOT_FOLDER_TEMP_NAME)
 
@@ -131,6 +142,9 @@ def main() -> None:
         update_version_file(True)
     else:
         update_version_file(False)
+
+    # Empty dist folder before building
+    empty_dist_folder()
 
     # Run PyInstaller using platform-specific spec file
     run_pyinstaller(platform)
