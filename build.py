@@ -4,6 +4,7 @@
 import sys
 import subprocess
 import os
+import shutil
 from pathlib import Path
 
 import PyInstaller.__main__
@@ -88,8 +89,12 @@ def run_pyinstaller(platform: str) -> None:
 
 
 def create_folder_structure():
-    if not os.path.exists(BUNDLE_ROOT_FOOLDER):
-        os.makedirs(BUNDLE_ROOT_FOOLDER)
+    # If bundle folder exists, delete it, to start fresh
+    if os.path.exists(BUNDLE_ROOT_FOOLDER):
+        shutil.rmtree(BUNDLE_ROOT_FOOLDER)
+
+    # Create bundle folder
+    os.makedirs(BUNDLE_ROOT_FOOLDER)
 
 
 def main() -> None:
