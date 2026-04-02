@@ -93,7 +93,7 @@ def create_version_number() -> str:
         return f"{VERSION.split("-")[0]}-dev+{hash}"
 
 
-def update_version_file(is_test_build):
+def update_version_file(is_test_build) -> None:
     version_file_content = f'VERSION = "{create_version_number()}"\n'
     version_file_content += f'DATE = "{get_current_commit_date()}"\n'
 
@@ -137,7 +137,7 @@ def create_folders(folders: list[str]) -> None:
         os.makedirs(BUNDLE_ROOT_FOLDER_FINAL_NAME / folder)
 
 
-def create_folder_structure():
+def create_folder_structure() -> None:
     # Create bundle folder
     os.makedirs(BUNDLE_ROOT_FOLDER_TEMP_NAME)
 
