@@ -3,10 +3,13 @@
 
 import sys
 import subprocess
+from pathlib import Path
 
 import PyInstaller.__main__
 
 from _version import VERSION
+
+VERSION_FILE_PATH = Path("src", "_version.py")
 
 
 def get_platform() -> str:
@@ -59,6 +62,19 @@ def create_version_number() -> str:
         return f"{VERSION.split("-")[0]}-dev+{hash}"
 
 
+def update_version_file(is_test_build):
+    version_file_content = f'VERSION = "{create_version_number()}"'
+    version_file_content += f'\nDATE = "{get_current_commit_date()}"'
+
+    if is_test_build:
+        version_file_content += "\nIS_TEST_BUILD = True"
+    else:
+        version_file_content += "\nIS_TEST_BUILD = False"
+
+    with open(VERSION_FILE_PATH, "w") as file:
+        file.write(version_file_content)
+
+
 def run_pyinstaller(platform: str) -> None:
     """Run PyInstaller using appropriate spec file."""
     if platform == "win32":
@@ -85,6 +101,12 @@ def main() -> None:
         is_test_build = False
     else:
         is_test_build = True
+
+    # Update vesion file
+    if is_test_build:
+        update_version_file(True)
+    else:
+        update_version_file(False)
 
     # Run PyInstaller using platform-specific spec file
     run_pyinstaller(platform)
