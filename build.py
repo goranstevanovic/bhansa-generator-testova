@@ -13,6 +13,8 @@ from _version import VERSION
 
 VERSION_FILE_PATH = Path("src", "_version.py")
 BUNDLE_ROOT_FOOLDER = Path("dist", "generator-testova-bundle")
+WINDOWS_EXE_PATH = Path("dist", "generator-testova.exe")
+LINUX_EXE_PATH = Path("dist", "generator-testova")
 
 
 def get_platform() -> str:
@@ -95,6 +97,12 @@ def create_folder_structure():
 
     # Create bundle folder
     os.makedirs(BUNDLE_ROOT_FOOLDER)
+
+    # Move executable file into bundle folder
+    if get_platform() == "win32":
+        shutil.move(WINDOWS_EXE_PATH, BUNDLE_ROOT_FOOLDER)
+    elif get_platform() == "linux":
+        shutil.move(LINUX_EXE_PATH, BUNDLE_ROOT_FOOLDER)
 
 
 def main() -> None:
