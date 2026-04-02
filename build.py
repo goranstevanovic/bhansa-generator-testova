@@ -79,6 +79,14 @@ def main() -> None:
         print(err)
         sys.exit(1)
 
+    # Determine if creating test build or not
+    if get_current_commit_tag().startswith("v"):
+        is_test_build = False
+        print("not test build")
+    else:
+        is_test_build = True
+        print("test build")
+
     # Run PyInstaller using platform-specific spec file
     run_pyinstaller(platform)
 
