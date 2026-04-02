@@ -30,6 +30,14 @@ def get_current_commit_tag() -> str:
     return result.stdout.strip()
 
 
+def get_current_commit_hash() -> str:
+    """Get short hash of current commit."""
+    cmd = ["git", "rev-parse", "--short", "HEAD"]
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    return result.stdout.strip()
+
+
 def run_pyinstaller(platform: str) -> None:
     """Run PyInstaller using appropriate spec file."""
     if platform == "win32":
