@@ -16,6 +16,24 @@ BUNDLE_ROOT_FOLDER_TEMP_NAME = Path("dist", "generator-testova-bundle")
 BUNDLE_ROOT_FOLDER_FINAL_NAME = Path("dist", "generator-testova")
 WINDOWS_EXE_PATH = Path("dist", "generator-testova.exe")
 LINUX_EXE_PATH = Path("dist", "generator-testova")
+FOLDERS_TEMPLATES = ["baza/predlosci"]
+FOLDERS_QUESTIONS = [
+    "baza/pitanja/ass",
+    "baza/pitanja/emr",
+    "baza/pitanja/eqp",
+    "baza/pitanja/lgc",
+    "baza/pitanja/lnf",
+    "baza/pitanja/lpi",
+]
+FOLDERS_ANSWERS = [
+    "baza/odgovori/ass",
+    "baza/odgovori/emr",
+    "baza/odgovori/eqp",
+    "baza/odgovori/lgc",
+    "baza/odgovori/lnf",
+    "baza/odgovori/lpi",
+]
+FOLDERS_GENERATED_TESTS = ["generisani-testovi"]
 
 
 def get_platform() -> str:
@@ -106,6 +124,12 @@ def run_pyinstaller(platform: str) -> None:
     PyInstaller.__main__.run(["--clean", spec_file])
 
 
+def create_folders(folders: list[str]) -> None:
+    """Create template folders."""
+    for folder in folders:
+        os.makedirs(BUNDLE_ROOT_FOLDER_FINAL_NAME / folder)
+
+
 def create_folder_structure():
     # Create bundle folder
     os.makedirs(BUNDLE_ROOT_FOLDER_TEMP_NAME)
@@ -118,6 +142,12 @@ def create_folder_structure():
 
     # Rename bundle root folder
     shutil.move(BUNDLE_ROOT_FOLDER_TEMP_NAME, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+
+    # Create template, questions, answers, and generated tests folders
+    create_folders(FOLDERS_TEMPLATES)
+    create_folders(FOLDERS_QUESTIONS)
+    create_folders(FOLDERS_ANSWERS)
+    create_folders(FOLDERS_GENERATED_TESTS)
 
 
 def main() -> None:
