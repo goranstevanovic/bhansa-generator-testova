@@ -63,13 +63,13 @@ def create_version_number() -> str:
 
 
 def update_version_file(is_test_build):
-    version_file_content = f'VERSION = "{create_version_number()}"'
-    version_file_content += f'\nDATE = "{get_current_commit_date()}"'
+    version_file_content = f'VERSION = "{create_version_number()}"\n'
+    version_file_content += f'DATE = "{get_current_commit_date()}"\n'
 
     if is_test_build:
-        version_file_content += "\nIS_TEST_BUILD = True"
+        version_file_content += "IS_TEST_BUILD = True\n"
     else:
-        version_file_content += "\nIS_TEST_BUILD = False"
+        version_file_content += "IS_TEST_BUILD = False\n"
 
     with open(VERSION_FILE_PATH, "w") as file:
         file.write(version_file_content)
