@@ -3,6 +3,7 @@
 
 import sys
 import subprocess
+import os
 from pathlib import Path
 
 import PyInstaller.__main__
@@ -10,6 +11,7 @@ import PyInstaller.__main__
 from _version import VERSION
 
 VERSION_FILE_PATH = Path("src", "_version.py")
+BUNDLE_ROOT_FOOLDER = Path("dist", "generator-testova")
 
 
 def get_platform() -> str:
@@ -85,6 +87,11 @@ def run_pyinstaller(platform: str) -> None:
     PyInstaller.__main__.run(["--clean", spec_file])
 
 
+def create_folder_structure():
+    if not os.path.exists(BUNDLE_ROOT_FOOLDER):
+        os.makedirs(BUNDLE_ROOT_FOOLDER)
+
+
 def main() -> None:
     # Get OS/platform
     platform = get_platform()
@@ -110,6 +117,8 @@ def main() -> None:
 
     # Run PyInstaller using platform-specific spec file
     run_pyinstaller(platform)
+
+    create_folder_structure()
 
 
 if __name__ == "__main__":
