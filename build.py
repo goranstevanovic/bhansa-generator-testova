@@ -38,6 +38,14 @@ def get_current_commit_hash() -> str:
     return result.stdout.strip()
 
 
+def get_current_commit_date() -> str:
+    """Get YYYY-MM-DD date of current commit."""
+    cmd = ["git", "show", "-s", "--format=%cs"]
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    return result.stdout.strip()
+
+
 def run_pyinstaller(platform: str) -> None:
     """Run PyInstaller using appropriate spec file."""
     if platform == "win32":
