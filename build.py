@@ -12,7 +12,7 @@ import PyInstaller.__main__
 from _version import VERSION
 
 VERSION_FILE_PATH = Path("src", "_version.py")
-BUNDLE_ROOT_FOOLDER = Path("dist", "generator-testova")
+BUNDLE_ROOT_FOOLDER = Path("dist", "generator-testova-bundle")
 
 
 def get_platform() -> str:
