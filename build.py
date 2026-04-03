@@ -137,15 +137,6 @@ def create_folders(folders: list[str]) -> None:
         os.makedirs(BUNDLE_ROOT_FOLDER_FINAL_NAME / folder)
 
 
-def copy_files(sources: list, dest_root: Path) -> None:
-    """Copy files from source folders to destination folders."""
-    for source in sources:
-        source = Path(source)
-        destination = dest_root / source
-        for file in os.listdir(source):
-            shutil.copy2(source / file, destination)
-
-
 def create_folder_structure() -> None:
     # Create bundle folder
     os.makedirs(BUNDLE_ROOT_FOLDER_TEMP_NAME)
@@ -165,8 +156,25 @@ def create_folder_structure() -> None:
     create_folders(FOLDERS_ANSWERS)
     create_folders(FOLDERS_GENERATED_TESTS)
 
+
+def copy_files(sources: list, dest_root: Path) -> None:
+    """Copy files from source folders to destination folders."""
+    for source in sources:
+        source = Path(source)
+        destination = dest_root / source
+        for file in os.listdir(source):
+            shutil.copy2(source / file, destination)
+
+
+def copy_basic_release_files(sources: list, dest_root: Path) -> None:
+    """
+    Copy basic release files from source to destination folders.
+    Basic release files are template files, that don't contain sensitive
+    information.
+
+    """
     # Copy template files
-    copy_files(FOLDERS_TEMPLATES, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    copy_files(sources, dest_root)
 
 
 def main() -> None:
@@ -200,6 +208,9 @@ def main() -> None:
 
     # Create basic folder structure, empty folders, without files
     create_folder_structure()
+
+    # Copy basic release files (templates)
+    copy_basic_release_files(FOLDERS_TEMPLATES, BUNDLE_ROOT_FOLDER_FINAL_NAME)
 
 
 if __name__ == "__main__":
