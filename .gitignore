@@ -240,3 +240,6 @@ tests/fixtures/tmp/
 
 # Version number and date file (auto-generated)
 src/_version.py
+
+# Releases folder containing all built release archives
+releases/

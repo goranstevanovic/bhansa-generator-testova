@@ -11,12 +11,18 @@ import PyInstaller.__main__
 
 from _version import VERSION
 
+# Base name of the release archive file
+ARCHIVE_BASE_NAME = "bhansa-generator-testova"
+
 # File containing version number and date
 VERSION_FILE_PATH = Path("src", "_version.py")
 
 # Bundle folder temporary and final names
 BUNDLE_ROOT_FOLDER_TEMP_NAME = Path("dist", "generator-testova-bundle")
 BUNDLE_ROOT_FOLDER_FINAL_NAME = Path("dist", "generator-testova")
+
+# Relases base folder
+RELEASES_BASE_FOLDER = Path("releases")
 
 # Generated executable files paths
 WINDOWS_EXE_PATH = Path("dist", "generator-testova.exe")
@@ -177,6 +183,21 @@ def copy_basic_release_files(sources: list, dest_root: Path) -> None:
     copy_files(sources, dest_root)
 
 
+def create_basic_release(platform: str) -> None:
+    version = create_version_number()
+    archive_name = f"{ARCHIVE_BASE_NAME}-v{version}"
+
+    source_dir = BUNDLE_ROOT_FOLDER_FINAL_NAME
+
+    if platform == "win32":
+        archive_name += "-windows"
+        pass
+    elif platform == "linux":
+        archive_name += "-linux"
+        archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
+        shutil.make_archive(archive_path, "gztar", source_dir)
+
+
 def main() -> None:
     # Get OS/platform
     platform = get_platform()
@@ -211,6 +232,9 @@ def main() -> None:
 
     # Copy basic release files (templates)
     copy_basic_release_files(FOLDERS_TEMPLATES, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+
+    # Create basic release
+    create_basic_release(platform)
 
 
 if __name__ == "__main__":
