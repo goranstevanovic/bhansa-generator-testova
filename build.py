@@ -191,7 +191,8 @@ def create_basic_release(platform: str) -> None:
 
     if platform == "win32":
         archive_name += "-windows"
-        pass
+        archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
+        shutil.make_archive(archive_path, "zip", source_dir)
     elif platform == "linux":
         archive_name += "-linux"
         archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
