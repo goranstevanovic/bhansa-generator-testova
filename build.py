@@ -14,6 +14,10 @@ from _version import VERSION
 # Base name of the release archive file
 ARCHIVE_BASE_NAME = "bhansa-generator-testova"
 
+# Root and base folders used when creating archives
+ARCHIVE_ROOT_FOLDER = Path("dist")
+ARCHIVE_BASE_FODLER = Path("generator-testova")
+
 # File containing version number and date
 VERSION_FILE_PATH = Path("src", "_version.py")
 
@@ -187,16 +191,18 @@ def create_basic_release(platform: str) -> None:
     version = create_version_number()
     archive_name = f"{ARCHIVE_BASE_NAME}-v{version}"
 
-    source_dir = BUNDLE_ROOT_FOLDER_FINAL_NAME
-
     if platform == "win32":
         archive_name += "-windows"
         archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
-        shutil.make_archive(archive_path, "zip", source_dir)
+        shutil.make_archive(
+            archive_path, "zip", ARCHIVE_ROOT_FOLDER, ARCHIVE_BASE_FODLER
+        )
     elif platform == "linux":
         archive_name += "-linux"
         archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
-        shutil.make_archive(archive_path, "gztar", source_dir)
+        shutil.make_archive(
+            archive_path, "gztar", ARCHIVE_ROOT_FOLDER, ARCHIVE_BASE_FODLER
+        )
 
 
 def main() -> None:
