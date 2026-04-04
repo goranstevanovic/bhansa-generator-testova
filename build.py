@@ -52,6 +52,9 @@ FOLDERS_ANSWERS = [
 ]
 FOLDERS_GENERATED_TESTS = ["generisani-testovi"]
 
+# Question number generator file
+QUESTIONS_GENERATOR = "FORM.xlsm"
+
 
 def get_platform() -> str:
     """Get OS/platform as a string."""
@@ -205,6 +208,17 @@ def create_basic_release(platform: str) -> None:
         )
 
 
+def copy_full_release_files():
+    """
+    Copy full release files from source to destination folders.
+    Full release files include questions generator form,
+    question documents, and answer documents
+    """
+    copy_files(FOLDERS_QUESTIONS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    copy_files(FOLDERS_ANSWERS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    shutil.copy2(QUESTIONS_GENERATOR, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+
+
 def main() -> None:
     # Get OS/platform
     platform = get_platform()
@@ -242,6 +256,9 @@ def main() -> None:
 
     # Create basic release
     create_basic_release(platform)
+
+    # Copy full release files (.xlsm form, .docx questions and answers)
+    copy_full_release_files()
 
 
 if __name__ == "__main__":
