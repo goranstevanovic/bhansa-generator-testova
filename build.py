@@ -268,6 +268,9 @@ def main() -> None:
     # Copy full release files (.xlsm form, .docx questions and answers)
     copy_full_release_files()
 
+    # Create full release archive
+    create_release_archive(platform, "full")
+
 
 if __name__ == "__main__":
     main()
