@@ -225,7 +225,7 @@ __marimo__/
 tmp/
 
 # Questions generator Excel files
-TRE.FORM.*.xlsm
+*FORM*.xlsm
 
 # Questions and answers database
 # (production version, test version is not ignored)
