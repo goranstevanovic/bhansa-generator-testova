@@ -5,6 +5,7 @@ import sys
 import subprocess
 import os
 import shutil
+import time
 from pathlib import Path
 
 import PyInstaller.__main__
@@ -234,7 +235,33 @@ def create_release_archive(platform: str, type: str = "basic") -> None:
         )
 
 
+def get_time_string(start_time: float, end_time: float) -> str:
+    """Get time string in format h:mm:ss."""
+
+    time_string = ""
+
+    total_time = end_time - start_time
+
+    hours = round(total_time // 3600)
+    remaining = total_time - hours * 3600
+    minutes = round(remaining // 60)
+    seconds = round(remaining - minutes * 60)
+
+    if hours > 0:
+        time_string += f"{hours}h "
+
+    if minutes > 0:
+        time_string += f"{minutes:02}m "
+
+    time_string += f"{seconds:02}s"
+
+    return time_string
+
+
 def main() -> None:
+    # Get start time
+    start_time = time.time()
+
     # Get OS/platform
     platform = get_platform()
 
@@ -277,6 +304,13 @@ def main() -> None:
 
     # Create full release archive
     create_release_archive(platform, "full")
+
+    # Get end time
+    end_time = time.time()
+
+    # Display total build time
+    time_string = get_time_string(start_time, end_time)
+    print("Total time:", time_string)
 
 
 if __name__ == "__main__":
