@@ -152,10 +152,15 @@ def run_pyinstaller(platform: str) -> None:
     PyInstaller.__main__.run(["--clean", spec_file])
 
 
-def create_folders(folders: list[str]) -> None:
-    """Create template folders."""
+def create_folders(folders: list[str]) -> list[Path]:
+    """Create folders from provided list of folders."""
+    created_folders = []
+
     for folder in folders:
         os.makedirs(BUNDLE_ROOT_FOLDER_FINAL_NAME / folder)
+        created_folders.append(BUNDLE_ROOT_FOLDER_FINAL_NAME / folder)
+
+    return created_folders
 
 
 def create_folder_structure() -> None:
