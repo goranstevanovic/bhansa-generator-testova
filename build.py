@@ -111,7 +111,7 @@ def create_version_number() -> str:
         return f"{VERSION.split("-")[0]}-dev+{hash}"
 
 
-def update_version_file(is_test_build) -> None:
+def update_version_file(is_test_build) -> str:
     """Update version file with correct version umber and date."""
     version_file_content = f'VERSION = "{create_version_number()}"\n'
     version_file_content += f'DATE = "{get_current_commit_date()}"\n'
@@ -123,6 +123,8 @@ def update_version_file(is_test_build) -> None:
 
     with open(VERSION_FILE_PATH, "w") as file:
         file.write(version_file_content)
+
+    return version_file_content
 
 
 def empty_dist_folder() -> None:
