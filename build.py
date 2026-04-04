@@ -190,18 +190,26 @@ def copy_basic_release_files(sources: list, dest_root: Path) -> None:
     copy_files(sources, dest_root)
 
 
-def create_basic_release(platform: str) -> None:
+def create_release_archive(platform: str, type: str = "basic") -> None:
     version = create_version_number()
     archive_name = f"{ARCHIVE_BASE_NAME}-v{version}"
 
     if platform == "win32":
         archive_name += "-windows"
+
+        if type == "full":
+            archive_name += "-full"
+
         archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
         shutil.make_archive(
             archive_path, "zip", ARCHIVE_ROOT_FOLDER, ARCHIVE_BASE_FODLER
         )
     elif platform == "linux":
         archive_name += "-linux"
+
+        if type == "full":
+            archive_name += "-full"
+
         archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
         shutil.make_archive(
             archive_path, "gztar", ARCHIVE_ROOT_FOLDER, ARCHIVE_BASE_FODLER
@@ -254,8 +262,8 @@ def main() -> None:
     # Copy basic release files (templates)
     copy_basic_release_files(FOLDERS_TEMPLATES, BUNDLE_ROOT_FOLDER_FINAL_NAME)
 
-    # Create basic release
-    create_basic_release(platform)
+    # Create basic release archive
+    create_release_archive(platform)
 
     # Copy full release files (.xlsm form, .docx questions and answers)
     copy_full_release_files()
