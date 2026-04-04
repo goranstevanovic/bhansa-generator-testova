@@ -96,6 +96,10 @@ def get_current_commit_date() -> str:
 
 
 def create_version_number() -> str:
+    """
+    Get current version number, either a version number from tag,
+    or previous version number plus short commit hash.
+    """
     tag = get_current_commit_tag()
     hash = get_current_commit_hash()
 
@@ -107,6 +111,7 @@ def create_version_number() -> str:
 
 
 def update_version_file(is_test_build) -> None:
+    """Update version file with correct version umber and date."""
     version_file_content = f'VERSION = "{create_version_number()}"\n'
     version_file_content += f'DATE = "{get_current_commit_date()}"\n'
 
@@ -151,6 +156,7 @@ def create_folders(folders: list[str]) -> None:
 
 
 def create_folder_structure() -> None:
+    """Create empty folder structure and copy template files."""
     # Create bundle folder
     os.makedirs(BUNDLE_ROOT_FOLDER_TEMP_NAME)
 
@@ -191,6 +197,7 @@ def copy_basic_release_files(sources: list, dest_root: Path) -> None:
 
 
 def create_release_archive(platform: str, type: str = "basic") -> None:
+    """Create release archives for basic and full releases."""
     version = create_version_number()
     archive_name = f"{ARCHIVE_BASE_NAME}-v{version}"
 
