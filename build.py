@@ -187,13 +187,20 @@ def create_folder_structure() -> list[list[Path]]:
     return created_folders
 
 
-def copy_files(sources: list, dest_root: Path) -> None:
+def copy_files(sources: list, dest_root: Path) -> tuple[list[Path], list[Path]]:
     """Copy files from source folders to destination folders."""
+    copied_files_sources = []
+    copied_files_destinations = []
+
     for source in sources:
         source = Path(source)
         destination = dest_root / source
         for file in os.listdir(source):
             shutil.copy2(source / file, destination)
+            copied_files_sources.append(source / file)
+            copied_files_destinations.append(destination / file)
+
+    return copied_files_sources, copied_files_destinations
 
 
 def copy_basic_release_files(sources: list, dest_root: Path) -> None:
