@@ -163,7 +163,7 @@ def create_folders(folders: list[str]) -> list[Path]:
     return created_folders
 
 
-def create_folder_structure() -> None:
+def create_folder_structure() -> list[list[Path]]:
     """Create empty folder structure and copy template files."""
     # Create bundle folder
     os.makedirs(BUNDLE_ROOT_FOLDER_TEMP_NAME)
@@ -178,10 +178,13 @@ def create_folder_structure() -> None:
     shutil.move(BUNDLE_ROOT_FOLDER_TEMP_NAME, BUNDLE_ROOT_FOLDER_FINAL_NAME)
 
     # Create template, questions, answers, and generated tests folders
-    create_folders(FOLDERS_TEMPLATES)
-    create_folders(FOLDERS_QUESTIONS)
-    create_folders(FOLDERS_ANSWERS)
-    create_folders(FOLDERS_GENERATED_TESTS)
+    created_folders = []
+    created_folders.append(create_folders(FOLDERS_TEMPLATES))
+    created_folders.append(create_folders(FOLDERS_QUESTIONS))
+    created_folders.append(create_folders(FOLDERS_ANSWERS))
+    created_folders.append(create_folders(FOLDERS_GENERATED_TESTS))
+
+    return created_folders
 
 
 def copy_files(sources: list, dest_root: Path) -> None:
