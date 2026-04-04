@@ -196,7 +196,7 @@ def copy_basic_release_files(sources: list, dest_root: Path) -> None:
     copy_files(sources, dest_root)
 
 
-def copy_full_release_files():
+def copy_full_release_files() -> None:
     """
     Copy full release files from source to destination folders.
     Full release files include questions generator form,
