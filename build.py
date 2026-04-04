@@ -196,6 +196,17 @@ def copy_basic_release_files(sources: list, dest_root: Path) -> None:
     copy_files(sources, dest_root)
 
 
+def copy_full_release_files():
+    """
+    Copy full release files from source to destination folders.
+    Full release files include questions generator form,
+    question documents, and answer documents
+    """
+    copy_files(FOLDERS_QUESTIONS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    copy_files(FOLDERS_ANSWERS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    shutil.copy2(QUESTIONS_GENERATOR, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+
+
 def create_release_archive(platform: str, type: str = "basic") -> None:
     """Create release archives for basic and full releases."""
     version = create_version_number()
@@ -221,17 +232,6 @@ def create_release_archive(platform: str, type: str = "basic") -> None:
         shutil.make_archive(
             archive_path, "gztar", ARCHIVE_ROOT_FOLDER, ARCHIVE_BASE_FODLER
         )
-
-
-def copy_full_release_files():
-    """
-    Copy full release files from source to destination folders.
-    Full release files include questions generator form,
-    question documents, and answer documents
-    """
-    copy_files(FOLDERS_QUESTIONS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
-    copy_files(FOLDERS_ANSWERS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
-    shutil.copy2(QUESTIONS_GENERATOR, BUNDLE_ROOT_FOLDER_FINAL_NAME)
 
 
 def main() -> None:
