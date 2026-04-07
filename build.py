@@ -62,13 +62,13 @@ def get_platform() -> str:
     return sys.platform
 
 
-def check_if_platform_supported(platform: str) -> bool:
+def check_if_platform_supported(platform_type: str) -> bool:
     """Check if current OS/platform is supported by this build script."""
-    if platform == "win32" or platform == "linux":
+    if platform_type == "win32" or platform_type == "linux":
         return True
     else:
         raise Exception(
-            f"{platform} is not supported. Only Windows and Linux are supported."
+            f"{platform_type} is not supported. Only Windows and Linux are supported."
         )
 
 
