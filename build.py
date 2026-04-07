@@ -397,7 +397,9 @@ def main() -> None:
     print()
 
     # Create full release archive
-    create_release_archive(platform_type, "full")
+    full_release_path = create_release_archive(platform_type, "full")
+    print("Full release archive created at", full_release_path)
+    print()
 
     # Get end time
     end_time = time.time()
