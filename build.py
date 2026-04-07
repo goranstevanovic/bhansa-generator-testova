@@ -234,7 +234,7 @@ def copy_full_release_files() -> (
     return copied_questions, copied_answers, copied_form
 
 
-def create_release_archive(platform_type: str, release_type: str = "basic") -> None:
+def create_release_archive(platform_type: str, release_type: str = "basic") -> str:
     """Create release archives for basic and full releases."""
     version = create_version_number()
     archive_name = f"{ARCHIVE_BASE_NAME}-v{version}"
@@ -259,6 +259,8 @@ def create_release_archive(platform_type: str, release_type: str = "basic") -> N
         shutil.make_archive(
             archive_path, "gztar", ARCHIVE_ROOT_FOLDER, ARCHIVE_BASE_FODLER
         )
+
+    return archive_path
 
 
 def get_time_string(start_time: float, end_time: float) -> str:
