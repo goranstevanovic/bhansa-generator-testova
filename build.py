@@ -297,14 +297,14 @@ def main() -> None:
 
     # Show starting message and start time
     print("Building and packaging process started")
-    print(f"at {current_time}")
+    print("at", current_time)
     print()
 
     # Get OS/platform
     platform_type = get_platform()
 
     # Show which platform is the release for
-    print(f"Creating release for {platform_type}")
+    print("Creating release for", platform_type)
     print()
 
     # Check if script is running on supported OS/platform
@@ -316,7 +316,7 @@ def main() -> None:
 
     # Determine if creating test build or not
     current_commit_tag = get_current_commit_tag()
-    print(f"Using commit: {current_commit_tag}")
+    print("Using commit:", current_commit_tag)
 
     if current_commit_tag.startswith("v"):
         is_test_build = False
