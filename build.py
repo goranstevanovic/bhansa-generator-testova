@@ -187,7 +187,7 @@ def create_folder_structure() -> list[list[Path]]:
     return created_folders
 
 
-def copy_files(sources: list, dest_root: Path) -> list[list[Path, Path]]:
+def copy_files(sources: list, dest_root: Path) -> list[tuple[Path, Path]]:
     """Copy files from source folders to destination folders."""
     copied_files_sources = []
     copied_files_destinations = []
@@ -202,13 +202,13 @@ def copy_files(sources: list, dest_root: Path) -> list[list[Path, Path]]:
             copied_files_destinations.append(destination / file)
 
     for i in range(len(copied_files_sources)):
-        copied_file = [copied_files_sources[i], copied_files_destinations[i]]
+        copied_file = (copied_files_sources[i], copied_files_destinations[i])
         copied_files.append(copied_file)
 
     return copied_files
 
 
-def copy_basic_release_files(sources: list, dest_root: Path) -> list[list[Path, Path]]:
+def copy_basic_release_files(sources: list, dest_root: Path) -> list[tuple[Path, Path]]:
     """
     Copy basic release files from source to destination folders.
     Basic release files are template files, that don't contain sensitive
@@ -220,7 +220,7 @@ def copy_basic_release_files(sources: list, dest_root: Path) -> list[list[Path, 
 
 
 def copy_full_release_files() -> (
-    tuple[list[list[Path, Path]], list[list[Path, Path]], str]
+    tuple[list[tuple[Path, Path]], list[tuple[Path, Path]], str]
 ):
     """
     Copy full release files from source to destination folders.
