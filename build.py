@@ -339,6 +339,8 @@ def main() -> None:
 
     # Empty dist folder before building
     empty_dist_folder()
+    print("dist folder cleared")
+    print()
 
     # Run PyInstaller using platform-specific spec file
     run_pyinstaller(platform_type)
