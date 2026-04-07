@@ -375,7 +375,26 @@ def main() -> None:
     print()
 
     # Copy full release files (.xlsm form, .docx questions and answers)
-    copy_full_release_files()
+    full_release_files = copy_full_release_files()
+    full_release_questions, full_release_answers, full_release_form = full_release_files
+
+    # Show which files are copied for full release
+    print("Copied files for full release:")
+
+    # Show copied questions
+    full_release_questions.sort()
+    for file_pair in full_release_questions:
+        print(file_pair[0], "->", file_pair[1])
+
+    # Show copied answers
+    if len(full_release_answers) == 0:
+        full_release_answers.sort()
+        for file_pair in full_release_answers:
+            print(file_pair[0], "->", file_pair[1])
+
+    # Show copied form
+    print(full_release_form)
+    print()
 
     # Create full release archive
     create_release_archive(platform_type, "full")
