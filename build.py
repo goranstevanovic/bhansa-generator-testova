@@ -401,12 +401,18 @@ def main() -> None:
     print("Full release archive created at", full_release_path)
     print()
 
+    # Get current time neatly formatted
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+
     # Get end time
     end_time = time.time()
 
-    # Display total build time
+    # Display completed message, end time and total build time
     time_string = get_time_string(start_time, end_time)
-    print("Total time:", time_string)
+    print("Building and packaging process completed")
+    print("at", current_time)
+    print("total run time:", time_string)
 
 
 if __name__ == "__main__":
