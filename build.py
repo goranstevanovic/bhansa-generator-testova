@@ -328,9 +328,14 @@ def main() -> None:
 
     # Update vesion file
     if is_test_build:
-        update_version_file(True)
+        version_file_content = update_version_file(True)
     else:
-        update_version_file(False)
+        version_file_content = update_version_file(False)
+
+    # Show version file content
+    print("Version file updated to:")
+    print(version_file_content)
+    print()
 
     # Empty dist folder before building
     empty_dist_folder()
