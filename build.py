@@ -359,7 +359,15 @@ def main() -> None:
     print()
 
     # Copy basic release files (templates)
-    copy_basic_release_files(FOLDERS_TEMPLATES, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    basic_release_files = copy_basic_release_files(
+        FOLDERS_TEMPLATES, BUNDLE_ROOT_FOLDER_FINAL_NAME
+    )
+
+    # Show which files are copied for basic release
+    print("Copied files for basic release:")
+    for file_pair in basic_release_files:
+        print(file_pair[0], "->", file_pair[1])
+    print()
 
     # Create basic release archive
     create_release_archive(platform_type)
