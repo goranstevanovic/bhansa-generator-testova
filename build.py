@@ -187,10 +187,11 @@ def create_folder_structure() -> list[list[Path]]:
     return created_folders
 
 
-def copy_files(sources: list, dest_root: Path) -> tuple[list[Path], list[Path]]:
+def copy_files(sources: list, dest_root: Path) -> list[list[Path, Path]]:
     """Copy files from source folders to destination folders."""
     copied_files_sources = []
     copied_files_destinations = []
+    copied_files = []
 
     for source in sources:
         source = Path(source)
@@ -200,7 +201,11 @@ def copy_files(sources: list, dest_root: Path) -> tuple[list[Path], list[Path]]:
             copied_files_sources.append(source / file)
             copied_files_destinations.append(destination / file)
 
-    return copied_files_sources, copied_files_destinations
+    for i in range(len(copied_files_sources)):
+        copied_file = [copied_files_sources[i], copied_files_destinations[i]]
+        copied_files.append(copied_file)
+
+    return copied_files
 
 
 def copy_basic_release_files(sources: list, dest_root: Path) -> None:
