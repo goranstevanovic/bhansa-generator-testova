@@ -208,7 +208,7 @@ def copy_files(sources: list, dest_root: Path) -> list[list[Path, Path]]:
     return copied_files
 
 
-def copy_basic_release_files(sources: list, dest_root: Path) -> None:
+def copy_basic_release_files(sources: list, dest_root: Path) -> list[list[Path, Path]]:
     """
     Copy basic release files from source to destination folders.
     Basic release files are template files, that don't contain sensitive
@@ -216,7 +216,7 @@ def copy_basic_release_files(sources: list, dest_root: Path) -> None:
 
     """
     # Copy template files
-    copy_files(sources, dest_root)
+    return copy_files(sources, dest_root)
 
 
 def copy_full_release_files() -> None:
