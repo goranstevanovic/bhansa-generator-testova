@@ -7,6 +7,7 @@ import os
 import shutil
 import time
 from pathlib import Path
+from datetime import datetime
 
 import PyInstaller.__main__
 
@@ -289,6 +290,15 @@ def get_time_string(start_time: float, end_time: float) -> str:
 def main() -> None:
     # Get start time
     start_time = time.time()
+
+    # Get current time neatly formatted
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+
+    # Show starting message and start time
+    print("Building and packaging process started")
+    print(f"at {current_time}")
+    print()
 
     # Get OS/platform
     platform_type = get_platform()
