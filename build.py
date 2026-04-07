@@ -370,7 +370,9 @@ def main() -> None:
     print()
 
     # Create basic release archive
-    create_release_archive(platform_type)
+    basic_release_path = create_release_archive(platform_type)
+    print("Basic release archive created at", basic_release_path)
+    print()
 
     # Copy full release files (.xlsm form, .docx questions and answers)
     copy_full_release_files()
