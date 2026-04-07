@@ -349,7 +349,14 @@ def main() -> None:
     print()
 
     # Create basic folder structure, empty folders, without files
-    create_folder_structure()
+    folder_structure = create_folder_structure()
+
+    # Show which folders are created for basic folder structure
+    print("Created basic folder structure:")
+    for folders in folder_structure:
+        for folder in folders:
+            print(str(folder))
+    print()
 
     # Copy basic release files (templates)
     copy_basic_release_files(FOLDERS_TEMPLATES, BUNDLE_ROOT_FOLDER_FINAL_NAME)
