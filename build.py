@@ -314,11 +314,12 @@ def main() -> None:
         print(err)
         sys.exit(1)
 
-    # Determine if creating test build or not
-    current_commit_tag = get_current_commit_tag()
-    print("Using commit:", current_commit_tag)
+    # Show which commit is used
+    current_commit_hash = get_current_commit_hash()
+    print("Using commit:", current_commit_hash)
 
-    if current_commit_tag.startswith("v"):
+    # Determine if creating test build or not
+    if get_current_commit_tag().startswith("v"):
         is_test_build = False
         print("Creating PRODUCTION release")
     else:
