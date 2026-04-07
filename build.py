@@ -315,10 +315,16 @@ def main() -> None:
         sys.exit(1)
 
     # Determine if creating test build or not
-    if get_current_commit_tag().startswith("v"):
+    current_commit_tag = get_current_commit_tag()
+    print(f"Using commit: {current_commit_tag}")
+
+    if current_commit_tag.startswith("v"):
         is_test_build = False
+        print("Creating PRODUCTION release")
     else:
         is_test_build = True
+        print("Creating TEST release")
+    print()
 
     # Update vesion file
     if is_test_build:
