@@ -234,25 +234,25 @@ def copy_full_release_files() -> (
     return copied_questions, copied_answers, copied_form
 
 
-def create_release_archive(platform: str, type: str = "basic") -> None:
+def create_release_archive(platform_type: str, release_type: str = "basic") -> None:
     """Create release archives for basic and full releases."""
     version = create_version_number()
     archive_name = f"{ARCHIVE_BASE_NAME}-v{version}"
 
-    if platform == "win32":
+    if platform_type == "win32":
         archive_name += "-windows"
 
-        if type == "full":
+        if release_type == "full":
             archive_name += "-full"
 
         archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
         shutil.make_archive(
             archive_path, "zip", ARCHIVE_ROOT_FOLDER, ARCHIVE_BASE_FODLER
         )
-    elif platform == "linux":
+    elif platform_type == "linux":
         archive_name += "-linux"
 
-        if type == "full":
+        if release_type == "full":
             archive_name += "-full"
 
         archive_path = str(RELEASES_BASE_FOLDER / Path(version) / Path(archive_name))
@@ -289,11 +289,11 @@ def main() -> None:
     start_time = time.time()
 
     # Get OS/platform
-    platform = get_platform()
+    platform_type = get_platform()
 
     # Check if script is running on supported OS/platform
     try:
-        check_if_platform_supported(platform)
+        check_if_platform_supported(platform_type)
     except Exception as err:
         print(err)
         sys.exit(1)
@@ -314,7 +314,7 @@ def main() -> None:
     empty_dist_folder()
 
     # Run PyInstaller using platform-specific spec file
-    run_pyinstaller(platform)
+    run_pyinstaller(platform_type)
 
     # Create basic folder structure, empty folders, without files
     create_folder_structure()
@@ -323,13 +323,13 @@ def main() -> None:
     copy_basic_release_files(FOLDERS_TEMPLATES, BUNDLE_ROOT_FOLDER_FINAL_NAME)
 
     # Create basic release archive
-    create_release_archive(platform)
+    create_release_archive(platform_type)
 
     # Copy full release files (.xlsm form, .docx questions and answers)
     copy_full_release_files()
 
     # Create full release archive
-    create_release_archive(platform, "full")
+    create_release_archive(platform_type, "full")
 
     # Get end time
     end_time = time.time()
