@@ -303,6 +303,10 @@ def main() -> None:
     # Get OS/platform
     platform_type = get_platform()
 
+    # Show which platform is the release for
+    print(f"Creating release for {platform_type}")
+    print()
+
     # Check if script is running on supported OS/platform
     try:
         check_if_platform_supported(platform_type)
