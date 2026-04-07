@@ -343,7 +343,10 @@ def main() -> None:
     print()
 
     # Run PyInstaller using platform-specific spec file
+    print("Starting PyInstaller...")
     run_pyinstaller(platform_type)
+    print("PyInstaller completed")
+    print()
 
     # Create basic folder structure, empty folders, without files
     create_folder_structure()
