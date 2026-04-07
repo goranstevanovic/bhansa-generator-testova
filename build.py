@@ -219,15 +219,19 @@ def copy_basic_release_files(sources: list, dest_root: Path) -> list[list[Path, 
     return copy_files(sources, dest_root)
 
 
-def copy_full_release_files() -> None:
+def copy_full_release_files() -> (
+    tuple[list[list[Path, Path]], list[list[Path, Path]], str]
+):
     """
     Copy full release files from source to destination folders.
     Full release files include questions generator form,
     question documents, and answer documents
     """
-    copy_files(FOLDERS_QUESTIONS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
-    copy_files(FOLDERS_ANSWERS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
-    shutil.copy2(QUESTIONS_GENERATOR, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    copied_questions = copy_files(FOLDERS_QUESTIONS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    copied_answers = copy_files(FOLDERS_ANSWERS, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+    copied_form = shutil.copy2(QUESTIONS_GENERATOR, BUNDLE_ROOT_FOLDER_FINAL_NAME)
+
+    return copied_questions, copied_answers, copied_form
 
 
 def create_release_archive(platform: str, type: str = "basic") -> None:
