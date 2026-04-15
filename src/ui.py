@@ -68,5 +68,12 @@ def print_test_generation_done(generated_tests: list[Path]) -> None:
         print(f"  - {file_name}")
 
 
+def print_test_generation_not_done(not_generated_tests: list[SubjectData]) -> None:
+    print()
+    print("Testovi nisu generisani za sljedeće oblasti:")
+    for subject in not_generated_tests:
+        print(f"- {subject['abbreviation'].upper()} {subject['title'].capitalize()}")
+
+
 def wait_for_exit() -> None:
     input("\nPritisnite Enter za izlaz iz programa...")

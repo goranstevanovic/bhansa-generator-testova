@@ -19,6 +19,7 @@ from ui import (
     print_assessor_info,
     print_subjects_summary,
     print_test_generation_done,
+    print_test_generation_not_done,
     wait_for_exit,
 )
 from file_utils import (
@@ -59,6 +60,10 @@ def main() -> None:
     generated_tests = generate_all_tests(subjects_with_all_questions, candidate)
 
     print_test_generation_done(generated_tests)
+
+    # List subjects without all necessary question files, if applicable
+    if subjects_without_all_questions:
+        print_test_generation_not_done(subjects_without_all_questions)
 
     # Delete temporay folder
     delete_tmp_folder()
