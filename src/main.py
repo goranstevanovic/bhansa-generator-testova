@@ -73,6 +73,18 @@ def main() -> None:
 
     print_test_generation_done(generated_tests)
 
+    # Show subjects for which tests were not generated
+    if question_files_not_available:
+        print()
+        print("Testovi nisu generisani za sljedeće oblasti:")
+
+        for subject in subjects:
+            if subject["abbreviation"] in question_files_not_available:
+                print(
+                    f"- {(subject['abbreviation']).upper()} {(subject['title']).capitalize()}"
+                )
+    print()
+
     # Delete temporay folder
     delete_tmp_folder()
 
