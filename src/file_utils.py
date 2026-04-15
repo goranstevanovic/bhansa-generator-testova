@@ -28,4 +28,4 @@ def check_available_files(folder: str, files: list, kind: str = "pitanja"):
 
     files_in_folder_stripped.sort()
 
-    print(files_in_folder_stripped)
+    return set(files).issubset(files_in_folder_stripped)
