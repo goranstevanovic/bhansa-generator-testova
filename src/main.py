@@ -61,8 +61,15 @@ def main() -> None:
         else:
             question_files_not_available.append(subject["abbreviation"])
 
+    # Create list with subjects that contain selected questions
+    subjects_with_available_questions = []
+
+    for subject in subjects:
+        if subject["abbreviation"] in question_files_available:
+            subjects_with_available_questions.append(subject)
+
     # Generate tests
-    generated_tests = generate_all_tests(subjects, candidate)
+    generated_tests = generate_all_tests(subjects_with_available_questions, candidate)
 
     print_test_generation_done(generated_tests)
 
