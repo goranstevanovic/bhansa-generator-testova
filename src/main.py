@@ -21,7 +21,10 @@ from ui import (
     print_test_generation_done,
     wait_for_exit,
 )
-from file_utils import delete_tmp_folder, check_available_files
+from file_utils import (
+    delete_tmp_folder,
+    check_questions_availability,
+)
 
 
 def main() -> None:
@@ -47,43 +50,15 @@ def main() -> None:
     print_assessor_info(assessor)
     print_subjects_summary(subjects)
 
-    question_files_available = []
-    question_files_not_available = []
-
-    # Check if all necessary question files are available for each subject
-    for subject in subjects:
-        all_question_files_available = check_available_files(
-            subject["abbreviation"], subject["generated_numbers"]
-        )
-
-        if all_question_files_available:
-            question_files_available.append(subject["abbreviation"])
-        else:
-            question_files_not_available.append(subject["abbreviation"])
-
-    # Create list with subjects that contain selected questions
-    subjects_with_available_questions = []
-
-    for subject in subjects:
-        if subject["abbreviation"] in question_files_available:
-            subjects_with_available_questions.append(subject)
+    # Check which subjects have all selected questions available, and which do not
+    subjects_with_all_questions, subjects_without_all_questions = (
+        check_questions_availability(subjects)
+    )
 
     # Generate tests
-    generated_tests = generate_all_tests(subjects_with_available_questions, candidate)
+    generated_tests = generate_all_tests(subjects_with_all_questions, candidate)
 
     print_test_generation_done(generated_tests)
-
-    # Show subjects for which tests were not generated
-    if question_files_not_available:
-        print()
-        print("Testovi nisu generisani za sljedeće oblasti:")
-
-        for subject in subjects:
-            if subject["abbreviation"] in question_files_not_available:
-                print(
-                    f"- {(subject['abbreviation']).upper()} {(subject['title']).capitalize()}"
-                )
-    print()
 
     # Delete temporay folder
     delete_tmp_folder()

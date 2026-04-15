@@ -29,3 +29,22 @@ def check_available_files(folder: str, files: list, kind: str = "pitanja"):
     files_in_folder_stripped.sort()
 
     return set(files).issubset(files_in_folder_stripped)
+
+
+def check_questions_availability(
+    subjects: list[SubjectData],
+) -> tuple[list[SubjectData], list[SubjectData]]:
+    """Return tuple containing two lists:
+    one with subjects that have all selected questions available,
+    another one with subjects that don't have all selected questions available.
+    """
+    question_files_available = []
+    question_files_not_available = []
+
+    for subject in subjects:
+        if check_available_files(subject["abbreviation"], subject["generated_numbers"]):
+            question_files_available.append(subject)
+        else:
+            question_files_not_available.append(subject)
+
+    return question_files_available, question_files_not_available
