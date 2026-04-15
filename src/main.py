@@ -21,7 +21,7 @@ from ui import (
     print_test_generation_done,
     wait_for_exit,
 )
-from file_utils import delete_tmp_folder
+from file_utils import delete_tmp_folder, check_available_files
 
 
 def main() -> None:
@@ -46,6 +46,20 @@ def main() -> None:
     print_candidate_info(candidate)
     print_assessor_info(assessor)
     print_subjects_summary(subjects)
+
+    question_files_available = []
+    question_files_not_available = []
+
+    # Check if all necessary question files are available for each subject
+    for subject in subjects:
+        all_question_files_available = check_available_files(
+            subject["abbreviation"], subject["generated_numbers"]
+        )
+
+        if all_question_files_available:
+            question_files_available.append(subject["abbreviation"])
+        else:
+            question_files_not_available.append(subject["abbreviation"])
 
     # Generate tests
     generated_tests = generate_all_tests(subjects, candidate)
