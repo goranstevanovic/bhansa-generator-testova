@@ -17,3 +17,10 @@ class TestCheckFileAvailability:
         expected_result = []
 
         assert result == expected_result
+
+    @patch("file_utils.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
+    def test_not_all_files_are_available(self):
+        result = check_file_availability("ndo", [1, 2, 3, 10, 50, 100])
+        expected_result = [10, 50, 100]
+
+        assert result.sort() == expected_result.sort()
