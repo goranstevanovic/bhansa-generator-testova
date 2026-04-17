@@ -45,6 +45,7 @@ def check_questions_availability(
         non_available_questions = check_file_availability(
             subject["abbreviation"], subject["generated_numbers"]
         )
+        non_available_questions.sort()
 
         if non_available_questions:
             subject_updated = dict(
