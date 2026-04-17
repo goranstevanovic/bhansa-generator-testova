@@ -78,10 +78,6 @@ def print_test_generation_not_done(not_generated_tests: list) -> None:
 
         # Convert question numbers from strings to numbers, so they can be joined
         missing_questions_list = [str(number) for number in missing_questions_list]
-
-        # Sort list of question numbers
-        missing_questions_list.sort()
-
         missing_questions_str = ", ".join(missing_questions_list)
 
         print(f"- {abbreviation} {title}")
