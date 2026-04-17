@@ -2,7 +2,6 @@
 
 import shutil
 import os
-from pathlib import Path
 
 from config import TEMPORARY_PATH, QUESTIONS_PATH
 from models import SubjectData
