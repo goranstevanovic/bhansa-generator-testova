@@ -172,3 +172,16 @@ def generate_test_answers_for_subject(
     test_answers_document.save(output_file_path)
 
     return output_file_path
+
+
+def generate_all_test_answers(
+    subjects: list[SubjectData], employee: EmployeeData
+) -> list[Path]:
+    """Generate test answers for all subjects and return list of output file paths."""
+    output_paths: list[Path] = []
+
+    for subject in subjects:
+        output_path = generate_test_answers_for_subject(subject, employee)
+        output_paths.append(output_path)
+
+    return output_paths
