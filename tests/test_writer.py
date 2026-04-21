@@ -9,6 +9,7 @@ from docx import Document
 from writer import (
     create_output_document_path,
     create_cover_page,
+    generate_document_for_subject,
     generate_test_for_subject,
     generate_all_tests,
     generate_test_answers_for_subject,
@@ -153,6 +154,96 @@ class TestCreateCoverPage:
         # Assert text is present
         assert "naziv prve oblasti" in full_text
         assert "npo" in full_text
+
+
+# Tests for generate_document_for_subject()
+class TestGenerateDocumentForSubject:
+    @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
+    @patch("writer.COVER_TEMPLATE", SAMPLE_COVER_TEMPLATE)
+    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
+    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
+    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
+    @patch("writer.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
+    def test_generates_test_and_test_answers_files_for_single_subject(
+        self, sample_subject, sample_employee
+    ):
+        result_questions = generate_document_for_subject(
+            sample_subject, sample_employee, "questions"
+        )
+        result_answers = generate_document_for_subject(
+            sample_subject, sample_employee, "answers"
+        )
+
+        assert result_questions.exists()
+        assert result_questions.suffix == ".docx"
+        assert result_answers.exists()
+        assert result_questions.suffix == ".docx"
+
+    @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
+    @patch("writer.COVER_TEMPLATE", SAMPLE_COVER_TEMPLATE)
+    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
+    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
+    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
+    @patch("writer.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
+    def test_generated_test_file_contains_selected_questions(
+        self, sample_subject, sample_employee, sample_questions
+    ):
+        result = generate_document_for_subject(
+            sample_subject, sample_employee, "questions"
+        )
+
+        # Open created document
+        doc = Document(result)
+
+        # Get all text from documents
+        full_text = "\n".join([paragraph.text for paragraph in doc.paragraphs])
+
+        # Assert selcted questions are in document
+        assert sample_questions["pitanje4"] in full_text
+        assert sample_questions["pitanje1"] in full_text
+        assert sample_questions["pitanje7"] in full_text
+        assert sample_questions["pitanje10"] in full_text
+
+        # Assert non-selected questions are not in document
+        assert sample_questions["pitanje2"] not in full_text
+        assert sample_questions["pitanje3"] not in full_text
+        assert sample_questions["pitanje5"] not in full_text
+        assert sample_questions["pitanje6"] not in full_text
+        assert sample_questions["pitanje8"] not in full_text
+        assert sample_questions["pitanje9"] not in full_text
+
+    @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
+    @patch("writer.COVER_TEMPLATE", SAMPLE_COVER_TEMPLATE)
+    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
+    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
+    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
+    @patch("writer.ANSWERS_PATH", SAMPLE_ANSWERS_PATH)
+    def test_generated_test_answers_file_contains_selected_questions(
+        self, sample_subject, sample_employee, sample_answers
+    ):
+        result = generate_test_answers_for_subject(
+            sample_subject, sample_employee, "answers"
+        )
+
+        # Open created document
+        doc = Document(result)
+
+        # Get all text from documents
+        full_text = "\n".join([paragraph.text for paragraph in doc.paragraphs])
+
+        # Assert selcted questions are in document
+        assert sample_answers["odgovor4"] in full_text
+        assert sample_answers["odgovor1"] in full_text
+        assert sample_answers["odgovor7"] in full_text
+        assert sample_answers["odgovor10"] in full_text
+
+        # Assert non-selected questions are not in document
+        assert sample_answers["odgovor2"] not in full_text
+        assert sample_answers["odgovor3"] not in full_text
+        assert sample_answers["odgovor5"] not in full_text
+        assert sample_answers["odgovor6"] not in full_text
+        assert sample_answers["odgovor8"] not in full_text
+        assert sample_answers["odgovor9"] not in full_text
 
 
 # Tests for generate_test_for_subject()
