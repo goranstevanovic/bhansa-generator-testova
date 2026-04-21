@@ -125,6 +125,25 @@ def generate_document_for_subject(
     return output_file_path
 
 
+def generate_documents_for_all_subjects(
+    subjects: list[SubjectData],
+    employee: EmployeeData,
+    is_answers_document: bool = False,
+) -> list[Path]:
+    """Generate tests or test answers for all subjects and return list of output file paths."""
+    output_paths: list[Path] = []
+
+    for subject in subjects:
+        if is_answers_document:
+            output_path = generate_document_for_subject(subject, employee, True)
+        else:
+            output_path = generate_document_for_subject(subject, employee)
+
+        output_paths.append(output_path)
+
+    return output_paths
+
+
 def generate_all_tests(
     subjects: list[SubjectData], employee: EmployeeData
 ) -> list[Path]:

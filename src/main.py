@@ -12,7 +12,7 @@ from config import (
     GENERATED_NUMBERS_RANGE,
 )
 from reader import load_employee_data, load_all_subject_data
-from writer import generate_all_tests, generate_all_test_answers
+from writer import generate_documents_for_all_subjects
 from ui import (
     print_title,
     print_candidate_info,
@@ -65,7 +65,9 @@ def main() -> None:
     )
 
     # Generate tests
-    generated_tests = generate_all_tests(subjects_with_all_questions, candidate)
+    generated_tests = generate_documents_for_all_subjects(
+        subjects_with_all_questions, candidate
+    )
 
     print_test_generation_done(generated_tests)
 
@@ -74,8 +76,8 @@ def main() -> None:
         print_test_generation_not_done(subjects_without_all_questions)
 
     # Generate test answers
-    generated_test_answers = generate_all_test_answers(
-        subjects_with_all_answers, candidate
+    generated_test_answers = generate_documents_for_all_subjects(
+        subjects_with_all_answers, candidate, True
     )
 
     print()
