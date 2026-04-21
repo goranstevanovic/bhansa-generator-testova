@@ -188,7 +188,7 @@ def generate_all_tests(
     output_paths: list[Path] = []
 
     for subject in subjects:
-        output_path = generate_test_for_subject(subject, employee)
+        output_path = generate_document_for_subject(subject, employee, "questions")
         output_paths.append(output_path)
 
     return output_paths
