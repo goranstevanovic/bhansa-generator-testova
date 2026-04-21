@@ -16,7 +16,9 @@ from config import (
 from models import EmployeeData, SubjectData
 
 
-def create_output_document_path(subject: SubjectData, employee: EmployeeData) -> Path:
+def create_output_document_path(
+    subject: SubjectData, employee: EmployeeData, is_answers_document: bool = False
+) -> Path:
     """Create a file path for a test document."""
     subject_abbrev = subject["abbreviation"]
     employee_name = employee["name"]
@@ -25,7 +27,12 @@ def create_output_document_path(subject: SubjectData, employee: EmployeeData) ->
     folder_path = OUTPUT_PATH / f"{employee_name} {employee_license}"
     folder_path.mkdir(parents=True, exist_ok=True)
 
-    file_name = f"{employee_name} {employee_license} {subject_abbrev.upper()}.docx"
+    file_name = f"{employee_name} {employee_license} {subject_abbrev.upper()}"
+
+    if is_answers_document:
+        file_name += " odgovori"
+
+    file_name += ".docx"
 
     return folder_path / file_name
 
