@@ -19,6 +19,9 @@ SAMPLE_ANSWERS_PATH = FIXTURES_PATH / "baza" / "odgovori"
 SAMPLE_OUTPUT_PATH = FIXTURES_PATH / "output"
 SAMPLE_TEMPORARY_PATH = FIXTURES_PATH / "tmp"
 SAMPLE_COVER_TEMPLATE = FIXTURES_PATH / "baza" / "predlosci" / "template-naslovna.docx"
+SAMPLE_COVER_TEMPLATE_ANSWERS = (
+    FIXTURES_PATH / "baza" / "predlosci" / "template-naslovna-odgovori.docx"
+)
 SAMPLE_TEMPLATE_TITLE_STRING = "naziv"
 SAMPLE_TEMPLATE_ABBREVIATION_STRING = "skracenica"
 
@@ -139,7 +142,7 @@ class TestCreateCoverPage:
     @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
     @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
     @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
-    def test_cover_page_contains_correct_text(self, sample_subject):
+    def test_cover_page_for_tests_contains_correct_text(self, sample_subject):
         result = create_cover_page(sample_subject)
 
         # Open created document
@@ -151,6 +154,25 @@ class TestCreateCoverPage:
         # Assert text is present
         assert "naziv prve oblasti" in full_text
         assert "npo" in full_text
+        assert "odgovori" not in full_text
+
+    @patch("writer.COVER_TEMPLATE_ANSWERS", SAMPLE_COVER_TEMPLATE_ANSWERS)
+    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
+    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
+    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
+    def test_cover_page_for_test_answers_contains_correct_text(self, sample_subject):
+        result = create_cover_page(sample_subject, True)
+
+        # Open created document
+        doc = Document(result)
+
+        # Get all text from document
+        full_text = "\n".join([paragraph.text for paragraph in doc.paragraphs])
+
+        # Assert text is present
+        assert "naziv prve oblasti" in full_text
+        assert "npo" in full_text
+        assert "odgovori" in full_text
 
 
 # Tests for generate_document_for_subject()

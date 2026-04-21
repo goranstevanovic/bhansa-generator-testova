@@ -10,6 +10,7 @@ from config import (
     QUESTIONS_PATH,
     ANSWERS_PATH,
     COVER_TEMPLATE,
+    COVER_TEMPLATE_ANSWERS,
     TEMPLATE_TITLE_STRING,
     TEMPLATE_ABBREVIATION_STRING,
 )
@@ -37,9 +38,13 @@ def create_output_document_path(
     return folder_path / file_name
 
 
-def create_cover_page(subject: SubjectData) -> Path:
+def create_cover_page(subject: SubjectData, is_answers_document: bool = False) -> Path:
     """Create cover page and return temporary file path."""
-    cover_page = DocxTemplate(COVER_TEMPLATE)
+    if is_answers_document:
+        cover_page = DocxTemplate(COVER_TEMPLATE_ANSWERS)
+    else:
+        cover_page = DocxTemplate(COVER_TEMPLATE)
+
     context = {
         TEMPLATE_TITLE_STRING: subject["title"],
         TEMPLATE_ABBREVIATION_STRING: subject["abbreviation"],
@@ -66,7 +71,10 @@ def generate_document_for_subject(
         output_file_path = create_output_document_path(subject, employee)
 
     # Create cover page
-    cover_page_path = create_cover_page(subject)
+    if is_answers_document:
+        cover_page_path = create_cover_page(subject, True)
+    else:
+        cover_page_path = create_cover_page(subject)
 
     # Create file names from generated numbers
     question_numbers = subject["generated_numbers"]
