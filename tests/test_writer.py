@@ -164,6 +164,7 @@ class TestGenerateDocumentForSubject:
     @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
     @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
     @patch("writer.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
+    @patch("writer.ANSWERS_PATH", SAMPLE_ANSWERS_PATH)
     def test_generates_test_and_test_answers_files_for_single_subject(
         self, sample_subject, sample_employee
     ):
@@ -221,7 +222,7 @@ class TestGenerateDocumentForSubject:
     def test_generated_test_answers_file_contains_selected_questions(
         self, sample_subject, sample_employee, sample_answers
     ):
-        result = generate_test_answers_for_subject(
+        result = generate_document_for_subject(
             sample_subject, sample_employee, "answers"
         )
 
