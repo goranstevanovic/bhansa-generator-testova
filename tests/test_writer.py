@@ -11,8 +11,6 @@ from writer import (
     create_cover_page,
     generate_document_for_subject,
     generate_documents_for_all_subjects,
-    generate_all_tests,
-    generate_all_test_answers,
 )
 
 FIXTURES_PATH = Path("tests/fixtures")
@@ -272,44 +270,6 @@ class TestDocumentsForAllSubjects:
         subjects = [sample_subject, sample_subject_2, sample_subject_3]
 
         results = generate_documents_for_all_subjects(subjects, sample_employee, True)
-
-        assert len(results) == 3
-        assert all(res.exists() for res in results)
-
-
-# Tests for generate_all_tests()
-class TestGenerateAllTests:
-    @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
-    @patch("writer.COVER_TEMPLATE", SAMPLE_COVER_TEMPLATE)
-    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
-    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
-    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
-    @patch("writer.QUESTIONS_PATH", SAMPLE_QUESTIONS_PATH)
-    def test_generates_test_files_for_all_subjects(
-        self, sample_subject, sample_subject_2, sample_subject_3, sample_employee
-    ):
-        subjects = [sample_subject, sample_subject_2, sample_subject_3]
-
-        results = generate_all_tests(subjects, sample_employee)
-
-        assert len(results) == 3
-        assert all(res.exists() for res in results)
-
-
-# Tests for generate_all_test_answers()
-class TestGenerateAllTestAnswers:
-    @patch("writer.OUTPUT_PATH", SAMPLE_OUTPUT_PATH)
-    @patch("writer.COVER_TEMPLATE", SAMPLE_COVER_TEMPLATE)
-    @patch("writer.TEMPORARY_PATH", SAMPLE_TEMPORARY_PATH)
-    @patch("writer.TEMPLATE_TITLE_STRING", SAMPLE_TEMPLATE_TITLE_STRING)
-    @patch("writer.TEMPLATE_ABBREVIATION_STRING", SAMPLE_TEMPLATE_ABBREVIATION_STRING)
-    @patch("writer.ANSWERS_PATH", SAMPLE_ANSWERS_PATH)
-    def test_generates_test_answers_files_for_all_subjects(
-        self, sample_subject, sample_subject_2, sample_subject_3, sample_employee
-    ):
-        subjects = [sample_subject, sample_subject_2, sample_subject_3]
-
-        results = generate_all_test_answers(subjects, sample_employee)
 
         assert len(results) == 3
         assert all(res.exists() for res in results)

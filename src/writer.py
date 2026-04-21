@@ -142,29 +142,3 @@ def generate_documents_for_all_subjects(
         output_paths.append(output_path)
 
     return output_paths
-
-
-def generate_all_tests(
-    subjects: list[SubjectData], employee: EmployeeData
-) -> list[Path]:
-    """Generate tests for all subjects and return list of output file paths."""
-    output_paths: list[Path] = []
-
-    for subject in subjects:
-        output_path = generate_document_for_subject(subject, employee)
-        output_paths.append(output_path)
-
-    return output_paths
-
-
-def generate_all_test_answers(
-    subjects: list[SubjectData], employee: EmployeeData
-) -> list[Path]:
-    """Generate test answers for all subjects and return list of output file paths."""
-    output_paths: list[Path] = []
-
-    for subject in subjects:
-        output_path = generate_document_for_subject(subject, employee, True)
-        output_paths.append(output_path)
-
-    return output_paths
