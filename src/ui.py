@@ -88,7 +88,11 @@ def print_document_generation_not_done(
     for document in not_generated_documents:
         abbreviation = document["abbreviation"].upper()
         title = document["title"].capitalize()
-        missing_documents_list = document["non_available_questions"]
+
+        if is_answers_documents:
+            missing_documents_list = document["non_available_answers"]
+        else:
+            missing_documents_list = document["non_available_questions"]
 
         # Convert question/answer numbers from strings to numbers, so they can be joined
         missing_documents_list = [str(number) for number in missing_documents_list]

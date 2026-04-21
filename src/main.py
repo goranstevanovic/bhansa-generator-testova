@@ -24,8 +24,7 @@ from ui import (
 )
 from file_utils import (
     delete_tmp_folder,
-    check_questions_availability,
-    check_answers_availability,
+    check_document_availability,
 )
 
 
@@ -54,12 +53,12 @@ def main() -> None:
 
     # Check which subjects have all selected questions available, and which do not
     subjects_with_all_questions, subjects_without_all_questions = (
-        check_questions_availability(subjects)
+        check_document_availability(subjects)
     )
 
     # Check which subjects have answers for all selected questions available, and which do not
     subjects_with_all_answers, subjects_without_all_answers = (
-        check_answers_availability(subjects)
+        check_document_availability(subjects, True)
     )
 
     # Generate tests

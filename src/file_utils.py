@@ -13,12 +13,15 @@ def delete_tmp_folder() -> None:
         shutil.rmtree(TEMPORARY_PATH)
 
 
-def check_file_availability(folder: str, files: list, document_type: str = "questions"):
+def check_file_availability(
+    folder: str, files: list, is_answers_document: bool = False
+):
     """Check if folder contains all provided files."""
-    if document_type == "questions":
-        folder_path = QUESTIONS_PATH / folder
-    elif document_type == "answers":
+    if is_answers_document:
         folder_path = ANSWERS_PATH / folder
+    else:
+        folder_path = QUESTIONS_PATH / folder
+
     files_in_folder = sorted(os.listdir(folder_path))
     files_in_folder_stripped = []
 
@@ -32,55 +35,38 @@ def check_file_availability(folder: str, files: list, document_type: str = "ques
     return files_not_available
 
 
-def check_questions_availability(
-    subjects: list[SubjectData],
+def check_document_availability(
+    subjects: list[SubjectData], is_answers_documents: bool = False
 ) -> tuple[list[SubjectData], list[dict]]:
     """Return tuple containing two lists:
-    one with subjects that have all selected questions available,
-    another one with subjects that don't have all selected questions available, including missing question numbers.
+    one with subjects that have all selected questions/answers available,
+    another one with subjects that don't have all selected questions/answers available, including missing question numbers.
     """
-    question_files_available = []
-    question_files_not_available = []
+    documents_available = []
+    documents_not_available = []
 
     for subject in subjects:
-        non_available_questions = check_file_availability(
-            subject["abbreviation"], subject["generated_numbers"]
-        )
-        non_available_questions.sort()
-
-        if non_available_questions:
-            subject_updated = dict(
-                subject, **{"non_available_questions": non_available_questions}
+        if is_answers_documents:
+            non_available_files = check_file_availability(
+                subject["abbreviation"], subject["generated_numbers"], True
             )
-            question_files_not_available.append(subject_updated)
         else:
-            question_files_available.append(subject)
-
-    return question_files_available, question_files_not_available
-
-
-def check_answers_availability(
-    subjects: list[SubjectData],
-) -> tuple[list[SubjectData], list[dict]]:
-    """Return tuple containing two lists:
-    one with subjects that have answers for all selected questions available,
-    another one with subjects that don't have answers for all selected questions available, including missing answer numbers.
-    """
-    answer_files_available = []
-    answer_files_not_available = []
-
-    for subject in subjects:
-        non_available_answers = check_file_availability(
-            subject["abbreviation"], subject["generated_numbers"], "answers"
-        )
-        non_available_answers.sort()
-
-        if non_available_answers:
-            subject_updated = dict(
-                subject, **{"non_available_answers": non_available_answers}
+            non_available_files = check_file_availability(
+                subject["abbreviation"], subject["generated_numbers"]
             )
-            answer_files_not_available.append(subject_updated)
-        else:
-            answer_files_available.append(subject)
+        non_available_files.sort()
 
-    return answer_files_available, answer_files_not_available
+        if non_available_files:
+            if is_answers_documents:
+                subject_updated = dict(
+                    subject, **{"non_available_answers": non_available_files}
+                )
+            else:
+                subject_updated = dict(
+                    subject, **{"non_available_questions": non_available_files}
+                )
+            documents_not_available.append(subject_updated)
+        else:
+            documents_available.append(subject)
+
+    return documents_available, documents_not_available
