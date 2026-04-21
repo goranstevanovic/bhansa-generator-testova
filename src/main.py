@@ -18,9 +18,8 @@ from ui import (
     print_candidate_info,
     print_assessor_info,
     print_subjects_summary,
-    print_test_generation_done,
+    print_document_generation_done,
     print_test_generation_not_done,
-    print_test_answers_generation_done,
     print_test_answers_generation_not_done,
     wait_for_exit,
 )
@@ -69,7 +68,7 @@ def main() -> None:
         subjects_with_all_questions, candidate
     )
 
-    print_test_generation_done(generated_tests)
+    print_document_generation_done(generated_tests)
 
     # List subjects without all necessary question files, if applicable
     if subjects_without_all_questions:
@@ -81,7 +80,7 @@ def main() -> None:
     )
 
     print()
-    print_test_answers_generation_done(generated_test_answers)
+    print_document_generation_done(generated_test_answers, True)
 
     # List subjects without answer files for all necessary question files, if applicable
     if subjects_without_all_answers:

@@ -53,16 +53,23 @@ def print_subjects_summary(subjects: list[SubjectData]) -> None:
         print()
 
 
-def print_test_generation_done(generated_tests: list[Path]) -> None:
-    normalized_path = os.path.normpath(generated_tests[0])
+def print_document_generation_done(
+    generated_documents: list[Path], is_answers_documents: bool = False
+) -> None:
+    normalized_path = os.path.normpath(generated_documents[0])
     output_folder, candidate_folder, _ = normalized_path.split(os.sep)
 
-    print("Testovi su generisani.")
-    print()
-    print(f"Testovi su sačuvani u folderu '{output_folder}' / '{candidate_folder}'")
+    if is_answers_documents:
+        print("Odgovori su generisani.")
+        print(
+            f"Odgovori su sačuvani u folderu '{output_folder}' / '{candidate_folder}'"
+        )
+    else:
+        print("Testovi su generisani.")
+        print(f"Testovi su sačuvani u folderu '{output_folder}' / '{candidate_folder}'")
 
-    for test in generated_tests:
-        normalized_path = os.path.normpath(test)
+    for document in generated_documents:
+        normalized_path = os.path.normpath(document)
         file_name = normalized_path.split(os.sep)[2]
 
         print(f"  - {file_name}")
@@ -82,21 +89,6 @@ def print_test_generation_not_done(not_generated_tests: list) -> None:
 
         print(f"- {abbreviation} {title}")
         print(f"  Pitanja koja nedostaju u bazi: {missing_questions_str}")
-
-
-def print_test_answers_generation_done(generated_test_answers: list[Path]) -> None:
-    normalized_path = os.path.normpath(generated_test_answers[0])
-    output_folder, candidate_folder, _ = normalized_path.split(os.sep)
-
-    print("Odgovori su generisani.")
-    print()
-    print(f"Odgovori su sačuvani u folderu '{output_folder}' / '{candidate_folder}'")
-
-    for test_answers in generated_test_answers:
-        normalized_path = os.path.normpath(test_answers)
-        file_name = normalized_path.split(os.sep)[2]
-
-        print(f"  - {file_name}")
 
 
 def print_test_answers_generation_not_done(not_generated_test_answers: list) -> None:
