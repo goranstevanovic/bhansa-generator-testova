@@ -75,36 +75,31 @@ def print_document_generation_done(
         print(f"  - {file_name}")
 
 
-def print_test_generation_not_done(not_generated_tests: list) -> None:
-    print()
-    print("Testovi nisu generisani za sljedeće oblasti:")
-    for subject in not_generated_tests:
-        abbreviation = subject["abbreviation"].upper()
-        title = subject["title"].capitalize()
-        missing_questions_list = subject["non_available_questions"]
+def print_document_generation_not_done(
+    not_generated_documents: list, is_answers_documents: bool = False
+) -> None:
+    if is_answers_documents:
+        print()
+        print("Odgovori nisu generisani za sljedeće oblasti:")
+    else:
+        print()
+        print("Testovi nisu generisani za sljedeće oblasti:")
 
-        # Convert question numbers from strings to numbers, so they can be joined
-        missing_questions_list = [str(number) for number in missing_questions_list]
-        missing_questions_str = ", ".join(missing_questions_list)
+    for document in not_generated_documents:
+        abbreviation = document["abbreviation"].upper()
+        title = document["title"].capitalize()
+        missing_documents_list = document["non_available_questions"]
 
-        print(f"- {abbreviation} {title}")
-        print(f"  Pitanja koja nedostaju u bazi: {missing_questions_str}")
-
-
-def print_test_answers_generation_not_done(not_generated_test_answers: list) -> None:
-    print()
-    print("Odgovori nisu generisani za sljedeće oblasti:")
-    for subject in not_generated_test_answers:
-        abbreviation = subject["abbreviation"].upper()
-        title = subject["title"].capitalize()
-        missing_answers_list = subject["non_available_answers"]
-
-        # Convert answer numbers from strings to numbers, so they can be joined
-        missing_answers_list = [str(number) for number in missing_answers_list]
-        missing_answers_str = ", ".join(missing_answers_list)
+        # Convert question/answer numbers from strings to numbers, so they can be joined
+        missing_documents_list = [str(number) for number in missing_documents_list]
+        missing_documents_str = ", ".join(missing_documents_list)
 
         print(f"- {abbreviation} {title}")
-        print(f"  Odgovori koji nedostaju u bazi: {missing_answers_str}")
+
+        if is_answers_documents:
+            print(f"  Odgovori koji nedostaju u bazi: {missing_documents_str}")
+        else:
+            print(f"  Pitanja koja nedostaju u bazi: {missing_documents_str}")
 
 
 def wait_for_exit() -> None:
