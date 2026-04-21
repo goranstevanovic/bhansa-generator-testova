@@ -54,16 +54,16 @@ def create_cover_page(subject: SubjectData) -> Path:
 
 
 def generate_document_for_subject(
-    subject: SubjectData, employee: EmployeeData, document_type: str
+    subject: SubjectData, employee: EmployeeData, is_answers_document: bool = False
 ) -> Path:
     """Merge cover page with selected question or answer files."""
     subject_abbrev = subject["abbreviation"]
 
     # Get output document file path
-    if document_type == "questions":
-        output_file_path = create_output_document_path(subject, employee)
-    elif document_type == "answers":
+    if is_answers_document:
         output_file_path = create_output_document_path(subject, employee, True)
+    else:
+        output_file_path = create_output_document_path(subject, employee)
 
     # Create cover page
     cover_page_path = create_cover_page(subject)
@@ -71,16 +71,16 @@ def generate_document_for_subject(
     # Create file names from generated numbers
     question_numbers = subject["generated_numbers"]
 
-    # File names for questions
-    if document_type == "questions":
-        files = [
-            f"{QUESTIONS_PATH}/{subject_abbrev}/{number}.docx"
-            for number in question_numbers
-        ]
     # File names for answers
-    elif document_type == "answers":
+    if is_answers_document:
         files = [
             f"{ANSWERS_PATH}/{subject_abbrev}/{number}.docx"
+            for number in question_numbers
+        ]
+    # File names for questions
+    else:
+        files = [
+            f"{QUESTIONS_PATH}/{subject_abbrev}/{number}.docx"
             for number in question_numbers
         ]
 
@@ -132,7 +132,7 @@ def generate_all_tests(
     output_paths: list[Path] = []
 
     for subject in subjects:
-        output_path = generate_document_for_subject(subject, employee, "questions")
+        output_path = generate_document_for_subject(subject, employee)
         output_paths.append(output_path)
 
     return output_paths
@@ -145,7 +145,7 @@ def generate_all_test_answers(
     output_paths: list[Path] = []
 
     for subject in subjects:
-        output_path = generate_document_for_subject(subject, employee, "answers")
+        output_path = generate_document_for_subject(subject, employee, True)
         output_paths.append(output_path)
 
     return output_paths

@@ -167,10 +167,10 @@ class TestGenerateDocumentForSubject:
         self, sample_subject, sample_employee
     ):
         result_questions = generate_document_for_subject(
-            sample_subject, sample_employee, "questions"
+            sample_subject, sample_employee
         )
         result_answers = generate_document_for_subject(
-            sample_subject, sample_employee, "answers"
+            sample_subject, sample_employee, True
         )
 
         assert result_questions.exists()
@@ -187,9 +187,7 @@ class TestGenerateDocumentForSubject:
     def test_generated_test_file_contains_selected_questions(
         self, sample_subject, sample_employee, sample_questions
     ):
-        result = generate_document_for_subject(
-            sample_subject, sample_employee, "questions"
-        )
+        result = generate_document_for_subject(sample_subject, sample_employee)
 
         # Open created document
         doc = Document(result)
@@ -220,9 +218,7 @@ class TestGenerateDocumentForSubject:
     def test_generated_test_answers_file_contains_selected_questions(
         self, sample_subject, sample_employee, sample_answers
     ):
-        result = generate_document_for_subject(
-            sample_subject, sample_employee, "answers"
-        )
+        result = generate_document_for_subject(sample_subject, sample_employee, True)
 
         # Open created document
         doc = Document(result)
