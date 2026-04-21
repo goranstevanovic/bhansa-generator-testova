@@ -3,7 +3,7 @@
 import shutil
 import os
 
-from config import TEMPORARY_PATH, QUESTIONS_PATH
+from config import TEMPORARY_PATH, QUESTIONS_PATH, ANSWERS_PATH
 from models import SubjectData
 
 
@@ -13,10 +13,12 @@ def delete_tmp_folder() -> None:
         shutil.rmtree(TEMPORARY_PATH)
 
 
-def check_file_availability(folder: str, files: list, kind: str = "pitanja"):
+def check_file_availability(folder: str, files: list, document_type: str = "questions"):
     """Check if folder contains all provided files."""
-    if kind == "pitanja":
+    if document_type == "questions":
         folder_path = QUESTIONS_PATH / folder
+    elif document_type == "answers":
+        folder_path = ANSWERS_PATH / folder
     files_in_folder = sorted(os.listdir(folder_path))
     files_in_folder_stripped = []
 
@@ -69,7 +71,7 @@ def check_answers_availability(
 
     for subject in subjects:
         non_available_answers = check_file_availability(
-            subject["abbreviation"], subject["generated_numbers"]
+            subject["abbreviation"], subject["generated_numbers"], "answers"
         )
         non_available_answers.sort()
 
