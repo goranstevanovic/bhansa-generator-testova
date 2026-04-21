@@ -55,3 +55,30 @@ def check_questions_availability(
             question_files_available.append(subject)
 
     return question_files_available, question_files_not_available
+
+
+def check_answers_availability(
+    subjects: list[SubjectData],
+) -> tuple[list[SubjectData], list[dict]]:
+    """Return tuple containing two lists:
+    one with subjects that have answers for all selected questions available,
+    another one with subjects that don't have answers for all selected questions available, including missing answer numbers.
+    """
+    answer_files_available = []
+    answer_files_not_available = []
+
+    for subject in subjects:
+        non_available_answers = check_file_availability(
+            subject["abbreviation"], subject["generated_numbers"]
+        )
+        non_available_answers.sort()
+
+        if non_available_answers:
+            subject_updated = dict(
+                subject, **{"non_available_answers": non_available_answers}
+            )
+            answer_files_not_available.append(subject_updated)
+        else:
+            answer_files_available.append(subject)
+
+    return answer_files_available, answer_files_not_available
