@@ -78,11 +78,14 @@ def main() -> None:
     )
 
     print()
-    print_document_generation_done(generated_test_answers, True)
 
-    # List subjects without answer files for all necessary question files, if applicable
-    if subjects_without_all_answers:
-        print_document_generation_not_done(subjects_without_all_answers, True)
+    # If at least one test answers document was generated, show information about that
+    if generated_test_answers:
+        print_document_generation_done(generated_test_answers, True)
+
+        # List subjects without answer files for all necessary question files, if applicable
+        if subjects_without_all_answers:
+            print_document_generation_not_done(subjects_without_all_answers, True)
 
     # Delete temporay folder
     delete_tmp_folder()
